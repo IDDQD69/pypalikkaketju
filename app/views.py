@@ -33,6 +33,9 @@ def fetch_posts():
         posts = sorted(content, key=lambda k: k['timestamp'],
                        reverse=True)
 
+@app.route('/wallet')
+def wallet():
+    return render_template('wallet.html')
 
 @app.route('/')
 def index():

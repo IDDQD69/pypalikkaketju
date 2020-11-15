@@ -5,6 +5,7 @@ import time
 from flask import Flask, request
 import requests
 
+from .signing.verify import verify_data
 
 class Block:
     def __init__(self, index, transactions, timestamp, previous_hash, nonce=0):
@@ -149,8 +150,13 @@ peers = set()
 # our application to add new data (posts) to the blockchain
 @app.route('/new_transaction', methods=['POST'])
 def new_transaction():
-    tx_data = request.get_json()
-    required_fields = ["author", "content"]
+
+    if not tx_data.get('signed_data') or not tx_data.get('public_key'):
+        return "Invalid transaction data", 404
+
+    tx_data = json.loads(verify_data(data_hex=tx_data.get('signed_data'),
+                                     key_hex=tx_data.get('public_key')))
+    required_fields = ["to_address", "secret_key", "amount"]
 
     for field in required_fields:
         if not tx_data.get(field):

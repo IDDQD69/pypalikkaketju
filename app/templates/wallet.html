@@ -1,0 +1,103 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<p>moi</p>
+
+<div id="my-insert-privatekey"></div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+  window.onload = function() {
+      function create(htmlStr) {
+          var frag = document.createDocumentFragment(),
+              temp = document.createElement('div');
+          temp.innerHTML = htmlStr;
+          while (temp.firstChild) {
+              frag.appendChild(temp.firstChild);
+          }
+          return frag;
+      }
+
+      function buf2hex(buffer) { // buffer is an ArrayBuffer
+          return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+      }
+
+      const fromHexString = hexString =>
+            new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+
+      const toHexString = bytes =>
+            bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
+
+
+      const validateSecretKey = secretKey => nacl.sign.keyPair.fromSecretKey(fromHexString(secretKey));
+
+      const kp = nacl.sign.keyPair();
+      sk_hex = toHexString(kp.secretKey);
+      pk_hex = toHexString(kp.publicKey);
+      sk_orig = fromHexString(sk_hex);
+      pk_orig = fromHexString(pk_hex);
+      
+      console.log('kp', kp);
+      console.log('sk_hex', sk_hex);
+      console.log('pk_hex', pk_hex);
+      console.log('sk_orig', sk_orig);
+      console.log('pk_orig', pk_orig);
+
+      const new_kp = nacl.sign.keyPair.fromSecretKey(sk_orig);
+      console.log('new kp', new_kp);
+
+
+      const message = "{'from_address': '', to_address: '', 'amount': 100}";
+      const secret_message = nacl.sign(nacl.util.decodeUTF8(message), sk_orig);
+      const signed_message_hex = toHexString(secret_message);
+
+      const sm_orig = fromHexString(signed_message_hex);
+
+      const opened = nacl.sign.open(sm_orig, pk_orig);
+      console.log('hexed message', signed_message_hex);
+      console.log('opened', nacl.util.encodeUTF8(opened));
+
+      
+      const storage = window.localStorage;
+      const secretkey = storage.getItem('secretkey');
+
+      console.log('seeeee', secretKey);
+      
+      if (!secretkey) {
+          var frag = create("<div><h1>No privatekey set</h1><div><input id='secretkey' type='text' placeholder='Insert private key'></input><button id='login'>login</button></div><div><p>or <button id='new-wallet'>create new</button></p></div></div>");
+          var element = document.getElementById('my-insert-privatekey');
+          element.appendChild(frag);
+
+          var element = document.getElementById('login');
+          element.addEventListener('click', () => {
+              var input = document.getElementById('secretkey');
+              var kp = validateSecretKey(input.value);
+              if (kp.secretKey && kp.publicKey) {
+                  storage.setItem('publicKey', kp.publicKey);
+                  storage.setItem('secretKey', kp.secretKey);
+                  window.location.reload(false);
+              }
+          });
+      } else {
+          var frag = create('<p>' + privatekey + '</p><button id="logout">logout</button>');
+          var element = document.getElementById('my-insert-privatekey');
+          element.appendChild(frag);
+
+          var element = document.getElementById('logout');
+          element.addEventListener('click', () => storage.clear());
+
+          window.location.reload(false);
+      }
+  }
+
+</script>
+
+<script type = "text/javascript" src="{{ url_for('static', filename = 'nacl.min.js') }}" ></script>
+<script type = "text/javascript" src="{{ url_for('static', filename = 'nacl-util.min.js') }}" ></script>
+
+{% endblock %}

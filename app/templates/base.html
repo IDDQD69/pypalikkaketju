@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>{{ title }}</title>
+    {% block head %}{% endblock %}
   </head>
   <body>
     <div><a href="/index">Home</a></div>
@@ -16,5 +17,6 @@
     {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}
+    {% block scripts %}{% endblock %}
   </body>
 </html>
