@@ -5,7 +5,7 @@ import time
 from flask import Flask, request
 import requests
 
-from .signing.verify import verify_data
+from signing.verify import verify_data
 
 class Block:
     def __init__(self, index, transactions, timestamp, previous_hash, nonce=0):
