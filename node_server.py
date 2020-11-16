@@ -10,27 +10,13 @@ from signing.verify import verify_data
 class Block:
     def __init__(self, index, transactions,
                  timestamp, previous_hash,
-                 previous_block, nonce=0):
+                 nonce=0):
 
         self.index = index
         self.transactions = transactions
         self.timestamp = timestamp
         self.previous_hash = previous_hash
         self.nonce = nonce
-
-        self._handle_transactions()
-
-    def _handle_transactions(self):
-        account_data_dict = {}
-        for tx in self.transactions:
-            tx['status'] = self._get_tx_status(tx)
-
-
-    def _get_tx_status(self, tx):
-        if self.index == 0:
-            return 0
-        return 0
-
 
     def compute_hash(self):
         """
@@ -43,6 +29,7 @@ class Block:
 class Blockchain:
     # difficulty of our PoW algorithm
     difficulty = 2
+    balance_map = {}
 
     def __init__(self):
         self.unconfirmed_transactions = []
@@ -54,10 +41,13 @@ class Blockchain:
         the chain. The block has index 0, previous_hash as 0, and
         a valid hash.
         """
-        transaction = {'amount': 9223372036854775807,
+        amount = 9223372036854775807,
+        to_address = 'e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5'
+        transaction = {'amount': amount,
                        'from_address': '',
-                       'to_address': 'e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5',
+                       'to_address': to_address,
                        'timestamp': time.time()}
+        self.balance_map[to_address] = amount
         genesis_block = Block(0, [transaction], 0, "0")
         genesis_block.hash = genesis_block.compute_hash()
         self.chain.append(genesis_block)
@@ -65,6 +55,14 @@ class Blockchain:
     @property
     def last_block(self):
         return self.chain[-1]
+
+    def _handle_block_transactions(self, transactions):
+        for tx in transactions:
+            from_address = tx['from_address']
+            to_address = tx['to_address']
+            amount = tx['amount']
+            pass
+
 
     def add_block(self, block, proof):
         """
@@ -82,7 +80,13 @@ class Blockchain:
         if not Blockchain.is_valid_proof(block, proof):
             return False
 
+        _handle_block_transactions(block.transactions)
+
         block.hash = proof
+
+
+
+
         self.chain.append(block)
         return True
 
