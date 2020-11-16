@@ -8,19 +8,59 @@ import requests
 from signing.verify import verify_data
 
 class Block:
-    def __init__(self, index, transactions, timestamp, previous_hash, nonce=0):
+    def __init__(self, index, transactions,
+                 timestamp, previous_hash,
+                 previous_block, nonce=0):
+
         self.index = index
         self.transactions = transactions
         self.timestamp = timestamp
         self.previous_hash = previous_hash
+        self.previous_block = previous_block
         self.nonce = nonce
+
+        self._validate_transactions()
+
+    def _find_transaction(self, by_key, by_value):
+        for tx in reversed(self.transactions):
+            if tx[by_key] == by_value and\
+               'status' in tx and\
+               tx['status'] == 0:
+                return tx
+        if self.previous_block:
+            return self.previous_block._find_transaction(by_key, by_value)
+        return None
+
+    def _validate_transactions(self):
+        account_data_dict = {}
+        for tx in self.transactions:
+            print('tx', tx)
+            tx['status'] = self._get_tx_status(tx)
+
+    def _get_tx_status(self, tx):
+        if self.index == 0:
+            return 0
+
+        previous_tx = self._find_transaction('from_address', tx['from_address'])
+
+        return 0
+
 
     def compute_hash(self):
         """
         A function that return the hash of the block contents.
         """
-        block_string = json.dumps(self.__dict__, sort_keys=True)
+        block_string = json.dumps(self._as_dict(), sort_keys=True)
         return sha256(block_string.encode()).hexdigest()
+
+    def _as_dict(self):
+        return {
+            'index': self.index,
+            'transactions': self.transactions,
+            'timestamp': self.timestamp,
+            'previous_hash': self.previous_hash,
+            'nonce': self.nonce
+        }
 
 
 class Blockchain:
@@ -42,7 +82,7 @@ class Blockchain:
                        'balance': 0,
                        'to_address': 'e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5',
                        'timestamp': time.time()}
-        genesis_block = Block(0, [transaction], 0, "0")
+        genesis_block = Block(0, [transaction], 0, "0", None)
         genesis_block.hash = genesis_block.compute_hash()
         self.chain.append(genesis_block)
 
@@ -131,7 +171,8 @@ class Blockchain:
         new_block = Block(index=last_block.index + 1,
                           transactions=self.unconfirmed_transactions,
                           timestamp=time.time(),
-                          previous_hash=last_block.hash)
+                          previous_hash=last_block.hash,
+                          previous_block=last_block)
 
         proof = self.proof_of_work(new_block)
         self.add_block(new_block, proof)
@@ -191,7 +232,7 @@ def new_transaction():
 def get_chain():
     chain_data = []
     for block in blockchain.chain:
-        chain_data.append(block.__dict__)
+        chain_data.append(block._as_dict())
     return json.dumps({"length": len(chain_data),
                        "chain": chain_data,
                        "peers": list(peers)})
