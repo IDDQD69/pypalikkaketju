@@ -2,19 +2,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>moi</p>
-
-<div id="my-insert-privatekey"></div>
-
-<br>
 
 <center>
-  <form action="/submit" id="textform" method="post">
-    <input type="text" name="to_address" placeholder="Your name">
-    <input type="text" name="to_address" placeholder="Your name">
-    <input type="text" name="to_address" placeholder="Your name">
-    <input type="submit" value="Post">
-  </form>
+  <div id="insert_sk"
+       style="visibility: hidden">
+    <input id="input_sk" size="50" type="password"
+           placeholder="Insert your secret key">
+    <button id="button_login">ok</button>
+  </div>
+
+  <div id="remove_sk"
+       style="visibility: hidden">
+    <button id="button_logout">logout</button>
+  </div>
+</center>
+
+<center>
+  <div id="make_transaction"
+        style="visibility: hidden">
+    <input id="input_tx_to_address" size="50"
+           type="text"
+           placeholder="To address">
+    <input id="input_tx_amount" size="10"
+           type="number" min="1"
+           placeholder="Amount"><br>
+    <input id="button_make_tx" type="submit" value="Make transaction">
+  </div>
 </center>
 
 <br>
@@ -49,6 +62,26 @@
 
       const validateSecretKey = secretKey => nacl.sign.keyPair.fromSecretKey(fromHexString(secretKey));
 
+
+      const makeTransaction = (to_address, amount, secret_key, public_key) => {
+
+          const kp = nacl.sign.keyPair.fromSecretKey(fromHexString(secret_key));
+          const obj = { 'to_address': to_address,
+                        'from_address': public_key,
+                        'amount': amount }
+          const obj_str = JSON.stringify(obj);
+          const secret = nacl.sign(nacl.util.decodeUTF8(obj_str), kp.secretKey);
+
+          axios.post('/submit', {
+              public_key: public_key,
+              message: toHexString(secret)
+          }).then(function (response) {
+              console.log(response);
+          }).catch(function (error) {
+              console.log(error);
+          });
+      };
+      
       const kp = nacl.sign.keyPair();
       sk_hex = toHexString(kp.secretKey);
       pk_hex = toHexString(kp.publicKey);
@@ -77,40 +110,51 @@
 
       
       const storage = window.localStorage;
-      const secretkey = storage.getItem('secretkey');
+      const publicKey = storage.getItem('publicKey');
+      const secretKey = storage.getItem('secretKey');
+      if (!secretKey || !publicKey) {
+          var insert_sk = document.getElementById('insert_sk');
+          insert_sk.style.visibility = 'visible';
 
-      console.log('seeeee', secretKey);
-      
-      if (!secretkey) {
-          var frag = create("<div><h1>No privatekey set</h1><div><input id='secretkey' type='text' placeholder='Insert private key'></input><button id='login'>login</button></div><div><p>or <button id='new-wallet'>create new</button></p></div></div>");
-          var element = document.getElementById('my-insert-privatekey');
-          element.appendChild(frag);
-
-          var element = document.getElementById('login');
-          element.addEventListener('click', () => {
-              var input = document.getElementById('secretkey');
+          var button_login = document.getElementById('button_login');
+          button_login.addEventListener('click', () => {
+              var input = document.getElementById('input_sk');
               var kp = validateSecretKey(input.value);
               if (kp.secretKey && kp.publicKey) {
-                  storage.setItem('publicKey', kp.publicKey);
-                  storage.setItem('secretKey', kp.secretKey);
+                  storage.setItem('publicKey', toHexString(kp.publicKey));
+                  storage.setItem('secretKey', toHexString(kp.secretKey));
                   window.location.reload(false);
               }
           });
       } else {
-          var frag = create('<p>' + privatekey + '</p><button id="logout">logout</button>');
-          var element = document.getElementById('my-insert-privatekey');
-          element.appendChild(frag);
+          var remove_sk = document.getElementById('remove_sk');
+          remove_sk.style.visibility = 'visible';
 
-          var element = document.getElementById('logout');
-          element.addEventListener('click', () => storage.clear());
+          var make_transaction = document.getElementById('make_transaction');
+          make_transaction.style.visibility = 'visible';
 
-          window.location.reload(false);
+          var button_logout = document.getElementById('button_logout');
+          button_logout.addEventListener('click', () => {
+              storage.clear();
+              window.location.reload(false);
+          });
+
+          var button_make_tx = document.getElementById('button_make_tx');
+          button_make_tx.addEventListener('click', () => {
+              var input_tx_to_address = document.getElementById('input_tx_to_address');
+              var input_tx_amount = document.getElementById('input_tx_amount');
+              makeTransaction(input_tx_to_address.value,
+                              input_tx_amount.value,
+                              secretKey,
+                              publicKey);
+          });
       }
   }
 
 </script>
 
-<script type = "text/javascript" src="{{ url_for('static', filename = 'nacl.min.js') }}" ></script>
-<script type = "text/javascript" src="{{ url_for('static', filename = 'nacl-util.min.js') }}" ></script>
+<script src="{{ url_for('static', filename = 'nacl.min.js') }}" ></script>
+<script src="{{ url_for('static', filename = 'nacl-util.min.js') }}" ></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 {% endblock %}

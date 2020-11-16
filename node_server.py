@@ -37,7 +37,12 @@ class Blockchain:
         the chain. The block has index 0, previous_hash as 0, and
         a valid hash.
         """
-        genesis_block = Block(0, [], 0, "0")
+        transaction = {'amount': 9223372036854775807,
+                       'from_address': '',
+                       'balance': 0,
+                       'to_address': 'e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5',
+                       'timestamp': time.time()}
+        genesis_block = Block(0, [transaction], 0, "0")
         genesis_block.hash = genesis_block.compute_hash()
         self.chain.append(genesis_block)
 
@@ -151,22 +156,32 @@ peers = set()
 @app.route('/new_transaction', methods=['POST'])
 def new_transaction():
 
-    if not tx_data.get('signed_data') or not tx_data.get('public_key'):
-        return "Invalid transaction data", 404
-
-    tx_data = json.loads(verify_data(data_hex=tx_data.get('signed_data'),
-                                     key_hex=tx_data.get('public_key')))
-    required_fields = ["to_address", "secret_key", "amount"]
+    tx_data = request.get_json()
+    print('txt data', tx_data)
+    required_fields = ["public_key", "message"]
 
     for field in required_fields:
-        if not tx_data.get(field):
+        if not field in tx_data:
+            return "Invalid transaction data", 404
+
+    message = tx_data['message']
+
+    tx_data = verify_data(data_hex=message,
+                          key_hex=tx_data['public_key'])
+    tx_data = json.loads(tx_data)
+
+    required_fields = ["to_address", "from_address", "amount"]
+    for field in required_fields:
+        if not field in tx_data:
             return "Invalid transaction data", 404
 
     tx_data["timestamp"] = time.time()
+    tx_data["message"] = message
+    tx_data["balance"] = 0
 
     blockchain.add_new_transaction(tx_data)
 
-    return "Success", 201
+    return "OK", 200
 
 
 # endpoint to return the node's copy of the chain.
@@ -330,4 +345,4 @@ def announce_new_block(block):
                       headers=headers)
 
 # Uncomment this line if you want to specify the port number in the code
-#app.run(debug=True, port=8000)
+# app.run(debug=True, port=8000)

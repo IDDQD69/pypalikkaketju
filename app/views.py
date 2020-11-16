@@ -3,6 +3,7 @@ import json
 
 import requests
 from flask import render_template, redirect, request
+from flask import jsonify
 
 from app import app
 
@@ -10,10 +11,10 @@ from app import app
 # such nodes as well.
 CONNECTED_NODE_ADDRESS = "http://127.0.0.1:8000"
 
-posts = []
+transactions = []
 
 
-def fetch_posts():
+def fetch_chain():
     """
     Function to fetch the chain from a blockchain node, parse the
     data and store it locally.
@@ -29,8 +30,8 @@ def fetch_posts():
                 tx["hash"] = block["previous_hash"]
                 content.append(tx)
 
-        global posts
-        posts = sorted(content, key=lambda k: k['timestamp'],
+        global transactions
+        transactions = sorted(content, key=lambda k: k['timestamp'],
                        reverse=True)
 
 @app.route('/wallet')
@@ -39,11 +40,11 @@ def wallet():
 
 @app.route('/')
 def index():
-    fetch_posts()
+    fetch_chain()
     return render_template('index.html',
                            title='YourNet: Decentralized '
                                  'content sharing',
-                           posts=posts,
+                           transactions=transactions,
                            node_address=CONNECTED_NODE_ADDRESS,
                            readable_time=timestamp_to_string)
 
@@ -53,22 +54,14 @@ def submit_textarea():
     """
     Endpoint to create a new transaction via our application.
     """
-    post_content = request.form["content"]
-    author = request.form["author"]
-
-    post_object = {
-        'author': author,
-        'content': post_content,
-    }
-
     # Submit a transaction
-    new_tx_address = "{}/new_transaction".format(CONNECTED_NODE_ADDRESS)
+    new_tx_address = f"{CONNECTED_NODE_ADDRESS}/new_transaction"
+    result = requests.post(new_tx_address,
+                           json=request.get_json(),
+                           headers={'Content-type': 'application/json'})
 
-    requests.post(new_tx_address,
-                  json=post_object,
-                  headers={'Content-type': 'application/json'})
-
-    return redirect('/')
+    return jsonify({'status_code': result.status_code,
+                    'status_text': result.text})
 
 
 def timestamp_to_string(epoch_time):
