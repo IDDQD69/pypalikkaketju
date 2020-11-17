@@ -1,0 +1,47 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<center>
+  <div id="make_transaction">
+    <input id="input_address" size="50"
+           type="text"
+           placeholder="Address"
+           value="{{ address }}">
+    <input id="button_search_address" type="submit" value="Search">
+  </div>
+</center>
+
+<br>
+
+{% for tx in transactions %}
+  {{ tx }}
+{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+  window.onload = function() {
+
+      var input_address = document.getElementById('input_address');
+      var button_search_address = document.getElementById('button_search_address');
+      button_search_address.addEventListener('click', () => {
+          window.location.href = '/account/' + input_address.value;
+      });
+      const storage = window.localStorage;
+      const publicKey = storage.getItem('publicKey');
+      const secretKey = storage.getItem('secretKey');
+      if (!secretKey || !publicKey) {
+      }
+  }
+
+</script>
+
+<script src="{{ url_for('static', filename = 'nacl.min.js') }}" ></script>
+<script src="{{ url_for('static', filename = 'nacl-util.min.js') }}" ></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+{% endblock %}

@@ -19,7 +19,7 @@ def fetch_chain():
     Function to fetch the chain from a blockchain node, parse the
     data and store it locally.
     """
-    get_chain_address = "{}/chain".format(CONNECTED_NODE_ADDRESS)
+    get_chain_address = f"{CONNECTED_NODE_ADDRESS}/chain"
     response = requests.get(get_chain_address)
     if response.status_code == 200:
         content = []
@@ -37,6 +37,22 @@ def fetch_chain():
 @app.route('/wallet')
 def wallet():
     return render_template('wallet.html')
+
+@app.route('/account/')
+@app.route('/account/<address>')
+def account(address=None):
+    transactions = []
+    address = address if address else ''
+    get_chain_address = f"{CONNECTED_NODE_ADDRESS}/transactions/{address}"
+    response = requests.get(get_chain_address)
+    if response.status_code == 200:
+        data = json.loads(response.content)
+        transactions = sorted(data['transactions'],
+                              key=lambda k: k['timestamp'],
+                              reverse=True)
+    return render_template('account.html',
+                           address=address,
+                           transactions=transactions)
 
 @app.route('/')
 def index():

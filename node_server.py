@@ -29,7 +29,6 @@ class Block:
 class Blockchain:
     # difficulty of our PoW algorithm
     difficulty = 2
-    balance_map = {}
 
     def __init__(self):
         self.unconfirmed_transactions = []
@@ -46,8 +45,8 @@ class Blockchain:
         transaction = {'amount': amount,
                        'from_address': '',
                        'to_address': to_address,
-                       'timestamp': time.time()}
-        self.balance_map[to_address] = amount
+                       'timestamp': time.time(),
+                       'status': 1}
         genesis_block = Block(0, [transaction], 0, "0")
         genesis_block.hash = genesis_block.compute_hash()
         self.chain.append(genesis_block)
@@ -55,14 +54,6 @@ class Blockchain:
     @property
     def last_block(self):
         return self.chain[-1]
-
-    def _handle_block_transactions(self, transactions):
-        for tx in transactions:
-            from_address = tx['from_address']
-            to_address = tx['to_address']
-            amount = tx['amount']
-            pass
-
 
     def add_block(self, block, proof):
         """
@@ -80,12 +71,7 @@ class Blockchain:
         if not Blockchain.is_valid_proof(block, proof):
             return False
 
-        _handle_block_transactions(block.transactions)
-
         block.hash = proof
-
-
-
 
         self.chain.append(block)
         return True
@@ -137,6 +123,34 @@ class Blockchain:
 
         return result
 
+
+    def get_balance(self, address):
+        balance = 0
+        for block in self.chain:
+            for tx in block.transactions:
+
+                if 'status' not in tx:
+                    print('tx', tx)
+
+                if tx['status'] != 1:
+                    continue
+
+                if tx['from_address'] == address:
+                    balance -= tx['amount']
+                elif tx['to_address'] == address:
+                    balance += tx['amount']
+        return balance
+    
+    def validate_block_transactions(self, block):
+        for tx in block.transactions:
+            tx_status = 0
+            from_balance = self.get_balance(tx['from_address'])
+            if from_balance < tx['amount']:
+                tx_status = 1
+            else:
+                tx_status = 2
+            tx['status'] = tx_status
+
     def mine(self):
         """
         This function serves as an interface to add the pending
@@ -153,6 +167,7 @@ class Blockchain:
                           timestamp=time.time(),
                           previous_hash=last_block.hash)
 
+        self.validate_block_transactions(new_block)
         proof = self.proof_of_work(new_block)
         self.add_block(new_block, proof)
 
@@ -184,16 +199,15 @@ def new_transaction():
             return "Invalid transaction data", 404
 
     message = tx_data['message']
-
     tx_data = verify_data(data_hex=message,
                           key_hex=tx_data['public_key'])
     tx_data = json.loads(tx_data)
-
     required_fields = ["to_address", "from_address", "amount"]
     for field in required_fields:
         if not field in tx_data:
             return "Invalid transaction data", 404
 
+    tx_data["amount"] = int(tx_data["amount"])
     tx_data["timestamp"] = time.time()
     tx_data["message"] = message
     tx_data["balance"] = 0
@@ -215,6 +229,19 @@ def get_chain():
                        "chain": chain_data,
                        "peers": list(peers)})
 
+@app.route('/transactions/', methods=['GET'])
+@app.route('/transactions/<address>', methods=['GET'])
+def get_transactions(address=None):
+    transactions = []
+    for block in blockchain.chain:
+        for tx in block.transactions:
+            if address:
+                if tx['from_address'] != address\
+                   and tx['to_address'] != address:
+                    continue
+            transactions.append(tx)
+    return json.dumps({"length": len(transactions),
+                       "transactions": transactions})
 
 # endpoint to request the node to mine the unconfirmed
 # transactions (if any). We'll be using it to initiate
