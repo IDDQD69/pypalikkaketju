@@ -144,15 +144,13 @@ class Blockchain:
         return balance
     
     def validate_block_transactions(self, block):
+        valid_transactions = []
         for tx in block.transactions:
-            tx_status = 0
             from_balance = self.get_balance(tx['from_address'])
             if from_balance >= tx['amount']:
-                tx_status = 1
-            else:
-                tx_status = 2
-            tx['status'] = tx_status
-        return [t for t in block.transactions if t['status'] == 1]
+                tx['status'] = 1
+                valid_transactions.append(tx)
+        return valid_transactions
 
     def mine(self):
         """
