@@ -20,6 +20,9 @@
 <center>
   <div id="make_transaction"
         style="visibility: hidden">
+
+    <div id="account_balance"></div>
+
     <input id="input_tx_to_address" size="50"
            type="text"
            placeholder="To address">
@@ -81,6 +84,23 @@
               console.log(error);
           });
       };
+
+      const getAccountTransactions = (account) => {
+          axios.get('/transactions/' + account)
+              .then(function (response) {
+                  console.log(response);
+                  var balance = response.data['balances'][account]
+                  if (!balance) {
+                      balance = 0;
+                  }
+                  var account_balance = document.getElementById('account_balance');
+                  account_balance.innerHTML = 'Balance: ' + balance; 
+                  remove_sk.style.visibility = 'visible';
+              }).catch(function (error) {
+                  console.log(error);
+              });
+          
+      }
       
       const kp = nacl.sign.keyPair();
       sk_hex = toHexString(kp.secretKey);
@@ -127,6 +147,7 @@
               }
           });
       } else {
+          getAccountTransactions(publicKey);
           var remove_sk = document.getElementById('remove_sk');
           remove_sk.style.visibility = 'visible';
 

@@ -3,6 +3,11 @@
 
 {% block content %}
 
+{% if address %}
+<img src="/hash_img/{{ address }}"
+     width="100px" height="100px">
+{% endif %}
+
 <center>
   <div id="make_transaction">
     <input id="input_address" size="50"
@@ -15,9 +20,25 @@
 
 <br>
 
-{% for tx in transactions %}
-  {{ tx }}
-{% endfor %}
+<center>
+  {% for tx in transactions %}
+  <div class="tx_box">
+    <span class="timestamp">{{ tx['timestamp'] }}</span>
+    <a href="/account/{{ tx['from_addres'] }}">
+      <img src="/hash_img/{{ tx['from_address'] }}"
+           width="100px" height="100px">
+    </a>
+    <a href="/account/{{ tx['to_addres'] }}">
+      <img src="/hash_img/{{ tx['to_address'] }}"
+           width="100px" height="100px">
+    </a>
+    <span class="amount">{{ tx['amount'] }}</span>
+  </div>
+  {% endfor %}
+</center>
+
+{{ balances  }}
+
 {% endblock %}
 
 {% block scripts %}

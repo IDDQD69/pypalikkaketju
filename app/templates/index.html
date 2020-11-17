@@ -2,16 +2,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<br>
-	<a href="{{node_address}}/mine" target="_blank"><button>Request to mine</button></a>
-	<a href="/"><button>Resync</button></a>
+<br>
+<a href="{{node_address}}/mine" target="_blank"><button>Request to mine</button></a>
+<a href="/"><button>Resync</button></a>
 
-	<div style="margin: 20px;">
+<div style="margin: 20px;">
 
-    {% for tx in transactions %}
-    <div class="tx_box">
-		{{ tx }}
-	</div>
-	{% endfor %}
-    </div>
+    <center>
+        {% for tx in transactions %}
+        <div class="tx_box">
+            <span class="timestamp">{{ tx['timestamp'] }}</span>
+            <a href="/account/{{ tx['from_addres'] }}">
+                <img src="/hash_img/{{ tx['from_address'] }}"
+                     width="100px" height="100px">
+            </a>
+            <a href="/account/{{ tx['to_addres'] }}">
+                <img src="/hash_img/{{ tx['to_address'] }}"
+                     width="100px" height="100px">
+            </a>
+            <span class="amount">{{ tx['amount'] }}</span>
+        </div>
+        {% endfor %}
+    </center>
+</div>
 {% endblock %}

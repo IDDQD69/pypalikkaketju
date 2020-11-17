@@ -1,6 +1,8 @@
 from hashlib import sha256
+import logging
 import json
 import time
+import os
 
 from flask import Flask, request
 import requests
@@ -40,10 +42,10 @@ class Blockchain:
         the chain. The block has index 0, previous_hash as 0, and
         a valid hash.
         """
-        amount = 9223372036854775807,
+        amount = 9223372036854775807
         to_address = 'e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5'
         transaction = {'amount': amount,
-                       'from_address': '',
+                       'from_address': '0',
                        'to_address': to_address,
                        'timestamp': time.time(),
                        'status': 1}
@@ -145,11 +147,12 @@ class Blockchain:
         for tx in block.transactions:
             tx_status = 0
             from_balance = self.get_balance(tx['from_address'])
-            if from_balance < tx['amount']:
+            if from_balance >= tx['amount']:
                 tx_status = 1
             else:
                 tx_status = 2
             tx['status'] = tx_status
+        return [t for t in block.transactions if t['status'] == 1]
 
     def mine(self):
         """
@@ -185,6 +188,20 @@ blockchain.create_genesis_block()
 # the address to other participating members of the network
 peers = set()
 
+@app.before_first_request
+def before_first_request():
+    log_level = logging.INFO
+    for handler in app.logger.handlers:
+        app.logger.removeHandler(handler)
+    root = os.path.dirname(os.path.abspath(__file__))
+    logdir = os.path.join(root, 'logs')
+    if not os.path.exists(logdir):
+        os.mkdir(logdir)
+    log_file = os.path.join(logdir, 'app.log')
+    handler = logging.FileHandler(log_file)
+    handler.setLevel(log_level)
+    app.logger.addHandler(handler)
+    app.logger.setLevel(log_level)
 
 # endpoint to submit a new transaction. This will be used by
 # our application to add new data (posts) to the blockchain
@@ -199,8 +216,9 @@ def new_transaction():
             return "Invalid transaction data", 404
 
     message = tx_data['message']
+    public_key = tx_data['public_key']
     tx_data = verify_data(data_hex=message,
-                          key_hex=tx_data['public_key'])
+                          key_hex=public_key)
     tx_data = json.loads(tx_data)
     required_fields = ["to_address", "from_address", "amount"]
     for field in required_fields:
@@ -213,6 +231,7 @@ def new_transaction():
     tx_data["balance"] = 0
 
     blockchain.add_new_transaction(tx_data)
+    app.logger.info(f"transfer: {public_key} {message}")
 
     return "OK", 200
 
@@ -229,9 +248,16 @@ def get_chain():
                        "chain": chain_data,
                        "peers": list(peers)})
 
+
+def _update_balances(balances, from_address,
+                    to_address, amount):
+    balances[from_address] = balances.get(from_address, 0) - amount
+    balances[to_address] = balances.get(to_address, 0) + amount
+
 @app.route('/transactions/', methods=['GET'])
 @app.route('/transactions/<address>', methods=['GET'])
 def get_transactions(address=None):
+    balances = {}
     transactions = []
     for block in blockchain.chain:
         for tx in block.transactions:
@@ -239,8 +265,13 @@ def get_transactions(address=None):
                 if tx['from_address'] != address\
                    and tx['to_address'] != address:
                     continue
+
+            if tx['status'] == 1:
+                _update_balances(balances, tx['from_address'],
+                                 tx['to_address'], tx['amount'])
             transactions.append(tx)
     return json.dumps({"length": len(transactions),
+                       "balances": balances,
                        "transactions": transactions})
 
 # endpoint to request the node to mine the unconfirmed

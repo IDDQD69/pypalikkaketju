@@ -1,0 +1,767 @@
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c d1e6f0336115f5c7497cda3a4a9afe94bf2346c033b17f325d8274b31ed05e2c6cfe078dbdc9bc547c20a4c03efdd9b86ea658988b2f5f41aa225ae7e3e5fd067b22746f5f61646472657373223a2237316438353639633036373937303439653336363531343431666638626566396134316137393862343835353432343065393736633030626432636465323533222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+transfer: d5317aef28b97b5e561d9f1710a443013fe66692daba1ff8c856bab3ad31ac6c 87f3ad5146e6b18708e2789ac018185a7b89d30e30e43774e478527692f8e9fda829046b100e53c2251fd02226a5a1a6c328abdd171180a7b4ff0efcbea380087b22746f5f61646472657373223a2262623730333032333363663566616538613836353662323166383466623634616161626339366133383333653564303665333736356431393361353666346562222c2266726f6d5f61646472657373223a2264353331376165663238623937623565353631643966313731306134343330313366653636363932646162613166663863383536626162336164333161633663222c22616d6f756e74223a2231303030227d
+Exception on /transactions/ [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 268, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 253, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/ [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 268, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 253, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/ [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 268, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 253, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/ [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 268, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 253, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 268, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 253, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 268, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 253, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 268, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 253, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 268, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 253, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 268, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 253, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 268, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 253, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 271, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 256, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+Exception on /new_transaction [POST]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 227, in new_transaction
+    tx_data["amount"] = int(tx_data["amount"])
+ValueError: invalid literal for int() with base 10: ''
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 271, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 256, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 272, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 256, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 272, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 256, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 273, in get_transactions
+    _update_balances(balances, tx['from_address'],
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 257, in _update_balances
+    balances[from_address] = balances.get(from_address, 0) - amount
+TypeError: unsupported operand type(s) for -: 'int' and 'tuple'
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 db97ed9ba45d4aab0f79ebc4fad386b41e3e7b40998d6b97255f5b24da9f7f5aa10761ba4ab3ea7bcfef9a58bfa2e4e7e2bcf4c97aa8699beea8a05f0f5a5b037b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223130227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 821dd29cd6540ca7b07f2154e0abc0871c8edccae3891d1fa4c3b5f8d192dd7b5b38cb947e91cd8a218d6942cb7ecbd40937598d9630f56525cf9881a7ba140f7b22746f5f61646472657373223a2266663861656665323838323536306639663364663736346163333434393962633466346139646531383930323139316430386138373734303534346537386562222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a2236303030227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 3a598d75413ddc29b5bc7afedd19e79be050f596a96d3df5b2214d0548e662729a0b5b5893f849efcc73d2eb2a263070882686be2fa3bdb3b05dae76f07aef097b22746f5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a2236303030227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 3a598d75413ddc29b5bc7afedd19e79be050f596a96d3df5b2214d0548e662729a0b5b5893f849efcc73d2eb2a263070882686be2fa3bdb3b05dae76f07aef097b22746f5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a2236303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+Exception on /transactions/2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 271, in get_transactions
+    del balances['0']
+KeyError: '0'
+Exception on /transactions/2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 271, in get_transactions
+    del balances['0']
+KeyError: '0'
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+Exception on /transactions/2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 271, in get_transactions
+    del balances['0']
+KeyError: '0'
+Exception on /transactions/e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 271, in get_transactions
+    del balances['0']
+KeyError: '0'
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+Exception on /transactions/2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 271, in get_transactions
+    del balances['0']
+KeyError: '0'
+Exception on /transactions/2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e [GET]
+Traceback (most recent call last):
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ajnieminen/dev/pypalikkaketju/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ajnieminen/dev/pypalikkaketju/node_server.py", line 271, in get_transactions
+    del balances['0']
+KeyError: '0'
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 74c7dd025d8318808b6724dcc68615466bdd965b48101c7bc44eebf9277d76479fa9bab393dacc24c573ec815f11297b38bf21c778b6d1b6b36322cf1940a10c7b22746f5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a223639227d
+transfer: 2fca72d45b0b51cbce6bd5fda19117e05671c9280a4e0b59a92b1966bbd49f5e bdb568ea525eb7dfd64f1e9f43fb4b6b3c54c968401946c07a854a18e02534d6d2f81bdafc1e739b56b305e27d05a1cb94422dcd050d8156b3583b56bedbf90a7b22746f5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c2266726f6d5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c22616d6f756e74223a2238303030227d
+transfer: e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5 abc5941c4d3a181586d7cc161151f7c524c728b9b9d9b6d82a6a9bf640ceafc83b07f3a42f735c350fdeafda2531f7c2214c24f70e5ec1441771ec311f693b037b22746f5f61646472657373223a2232666361373264343562306235316362636536626435666461313931313765303536373163393238306134653062353961393262313936366262643439663565222c2266726f6d5f61646472657373223a2265386565666136386234373137393736323930366366616632363033653361666563383161393933636439383432303761393335643136383532386330376135222c22616d6f756e74223a2233227d

@@ -1,9 +1,14 @@
 import datetime
 import json
+import io
+import tempfile
+
+import pagan
 
 import requests
 from flask import render_template, redirect, request
 from flask import jsonify
+from flask import send_file
 
 from app import app
 
@@ -42,17 +47,26 @@ def wallet():
 @app.route('/account/<address>')
 def account(address=None):
     transactions = []
+    balances = {}
     address = address if address else ''
     get_chain_address = f"{CONNECTED_NODE_ADDRESS}/transactions/{address}"
     response = requests.get(get_chain_address)
     if response.status_code == 200:
         data = json.loads(response.content)
+        balances = data['balances']
         transactions = sorted(data['transactions'],
                               key=lambda k: k['timestamp'],
                               reverse=True)
     return render_template('account.html',
                            address=address,
+                           balances=balances,
                            transactions=transactions)
+
+@app.route('/transactions/<address>', methods=['GET'])
+def get_transactions(address):
+    get_chain_address = f"{CONNECTED_NODE_ADDRESS}/transactions/{address}"
+    response = requests.get(get_chain_address)
+    return response.text
 
 @app.route('/')
 def index():
@@ -79,6 +93,12 @@ def submit_textarea():
     return jsonify({'status_code': result.status_code,
                     'status_text': result.text})
 
+@app.route('/hash_img/<value>')
+def get_hash_img(value):
+    tmpf = tempfile.mkstemp(".png")[1]
+    p = pagan.Avatar(value, pagan.SHA256)
+    p.save("/", tmpf)
+    return send_file(tmpf, mimetype='image/jpeg')
 
 def timestamp_to_string(epoch_time):
     return datetime.datetime.fromtimestamp(epoch_time).strftime('%H:%M')
