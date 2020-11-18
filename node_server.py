@@ -1,8 +1,8 @@
 from hashlib import sha256
 import logging
 import json
-import time
 import os
+import arrow
 
 from flask import Flask, request
 import requests
@@ -47,7 +47,7 @@ class Blockchain:
         transaction = {'amount': amount,
                        'from_address': '0',
                        'to_address': to_address,
-                       'timestamp': time.time(),
+                       'timestamp': arrow.utcnow().format(),
                        'status': 1}
         genesis_block = Block(0, [transaction], 0, "0")
         genesis_block.hash = genesis_block.compute_hash()
@@ -143,13 +143,30 @@ class Blockchain:
                     balance += tx['amount']
         return balance
     
-    def validate_block_transactions(self, block):
+    def validate_block_transactions(self, transactions):
         valid_transactions = []
-        for tx in block.transactions:
-            from_balance = self.get_balance(tx['from_address'])
-            if from_balance >= tx['amount']:
+        current_block_balances = {}
+
+        for tx in transactions:
+
+            from_address = tx['from_address']
+            to_address = tx['to_address']
+            amount = tx['amount']
+
+
+            from_balance = self.get_balance(from_address)
+            from_balance += current_block_balances.get(from_address, 0)
+
+            if from_balance >= amount:
+
+                cbb_from = current_block_balances.get(from_address, 0)
+                cbb_to = current_block_balances.get(to_address, 0)
+                current_block_balances[from_address] = cbb_from - amount
+                current_block_balances[to_address] = cbb_to - amount
+
                 tx['status'] = 1
                 valid_transactions.append(tx)
+
         return valid_transactions
 
     def mine(self):
@@ -162,13 +179,14 @@ class Blockchain:
             return False
 
         last_block = self.last_block
+        valid_transactions = self.validate_block_transactions(
+            self.unconfirmed_transactions)
 
         new_block = Block(index=last_block.index + 1,
-                          transactions=self.unconfirmed_transactions,
-                          timestamp=time.time(),
+                          transactions=valid_transactions,
+                          timestamp=arrow.utcnow().format(),
                           previous_hash=last_block.hash)
 
-        self.validate_block_transactions(new_block)
         proof = self.proof_of_work(new_block)
         self.add_block(new_block, proof)
 
@@ -178,6 +196,7 @@ class Blockchain:
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 # the node's copy of blockchain
 blockchain = Blockchain()
@@ -224,9 +243,10 @@ def new_transaction():
             return "Invalid transaction data", 404
 
     tx_data["amount"] = int(tx_data["amount"])
-    tx_data["timestamp"] = time.time()
+    tx_data["timestamp"] = arrow.utcnow().format()
     tx_data["message"] = message
     tx_data["balance"] = 0
+    tx_data["status"] = 0
 
     blockchain.add_new_transaction(tx_data)
     app.logger.info(f"transfer: {public_key} {message}")
@@ -377,8 +397,16 @@ def verify_and_add_block():
 
 # endpoint to query unconfirmed transactions
 @app.route('/pending_tx')
-def get_pending_tx():
-    return json.dumps(blockchain.unconfirmed_transactions)
+@app.route('/pending_tx/<address>')
+def get_pending_tx(address=None):
+    if not address:
+        return json.dumps(blockchain.unconfirmed_transactions)
+    else:
+        transactions = []
+        for tx in blockchain.unconfirmed_transactions:
+            if tx['from_address'] == address or tx['to_address'] == address:
+                transactions.append(tx)
+        return json.dumps(transactions)
 
 
 def consensus():

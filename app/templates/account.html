@@ -4,8 +4,14 @@
 {% block content %}
 
 {% if address %}
-<img src="/hash_img/{{ address }}"
-     width="100px" height="100px">
+
+<center>
+  <img src="/hash_img/{{ address }}"
+       width="100px" height="100px">
+  <p>balance:</p>
+  <h2>{{ balances[address] }}</h2>
+</center>
+
 {% endif %}
 
 <center>
@@ -24,11 +30,11 @@
   {% for tx in transactions %}
   <div class="tx_box">
     <span class="timestamp">{{ tx['timestamp'] }}</span>
-    <a href="/account/{{ tx['from_addres'] }}">
+    <a href="/account/{{ tx['from_address'] }}">
       <img src="/hash_img/{{ tx['from_address'] }}"
            width="100px" height="100px">
     </a>
-    <a href="/account/{{ tx['to_addres'] }}">
+    <a href="/account/{{ tx['to_address'] }}">
       <img src="/hash_img/{{ tx['to_address'] }}"
            width="100px" height="100px">
     </a>
@@ -36,8 +42,6 @@
   </div>
   {% endfor %}
 </center>
-
-{{ balances  }}
 
 {% endblock %}
 
@@ -63,6 +67,7 @@
 
 <script src="{{ url_for('static', filename = 'nacl.min.js') }}" ></script>
 <script src="{{ url_for('static', filename = 'nacl-util.min.js') }}" ></script>
+<script src="{{ url_for('static', filename = 'moment.js') }}" ></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 {% endblock %}

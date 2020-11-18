@@ -6,6 +6,8 @@ import tempfile
 import pagan
 
 import requests
+
+from jinja2 import Markup
 from flask import render_template, redirect, request
 from flask import jsonify
 from flask import send_file
@@ -18,6 +20,20 @@ CONNECTED_NODE_ADDRESS = "http://127.0.0.1:8000"
 
 transactions = []
 
+@app.context_processor
+def transaction_processor():
+    def ts_js(tx):
+        return Markup(f'''
+        <script>
+          document.write(
+            moment("{tx["timestamp"]}").format('L') + ' ' +
+            moment("{tx["timestamp"]}").format('LT')
+          );
+        </script>''')
+    def timestamp(tx):
+        return f'{tx["timestamp"]}'
+    return {'timestamp': timestamp,
+            'ts_js': ts_js}
 
 def fetch_chain():
     """
@@ -65,6 +81,14 @@ def account(address=None):
 @app.route('/transactions/<address>', methods=['GET'])
 def get_transactions(address):
     get_chain_address = f"{CONNECTED_NODE_ADDRESS}/transactions/{address}"
+    response = requests.get(get_chain_address)
+    return response.text
+
+@app.route('/pending_tx')
+@app.route('/pending_tx/<address>')
+def get_pending_tx(address=None):
+    address = address if address else ''
+    get_chain_address = f"{CONNECTED_NODE_ADDRESS}/pending_tx/{address}"
     response = requests.get(get_chain_address)
     return response.text
 

@@ -3,3 +3,4 @@ requests~=2.22
 pynacl~=1.4.0
 robohash~=1.1
 pagan~=0.4.3
+arrow~=2.7.0

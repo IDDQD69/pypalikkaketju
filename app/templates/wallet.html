@@ -3,6 +3,10 @@
 
 {% block content %}
 
+<div id="remove_sk"
+     style="visibility: hidden">
+  <button id="button_logout">logout</button>
+</div>
 <center>
   <div id="insert_sk"
        style="visibility: hidden">
@@ -10,26 +14,49 @@
            placeholder="Insert your secret key">
     <button id="button_login">ok</button>
   </div>
-
-  <div id="remove_sk"
-       style="visibility: hidden">
-    <button id="button_logout">logout</button>
-  </div>
 </center>
 
 <center>
   <div id="make_transaction"
-        style="visibility: hidden">
+       style="visibility: hidden">
 
+    <div id="account_img"></div>
+    <div id="account_address"></div>
     <div id="account_balance"></div>
 
-    <input id="input_tx_to_address" size="50"
-           type="text"
-           placeholder="To address">
-    <input id="input_tx_amount" size="10"
-           type="number" min="1"
-           placeholder="Amount"><br>
-    <input id="button_make_tx" type="submit" value="Make transaction">
+    <div id="tx_inputs"
+         style="visibility: visible">
+      <input id="input_tx_to_address" size="50"
+             type="text"
+             placeholder="To address">
+      <input id="input_tx_amount" size="10"
+             type="number" min="1"
+             placeholder="Amount"><br>
+      <input id="button_make_tx"
+             type="submit" value="Make transaction">
+    </div>
+  </div>
+</center>
+
+<center>
+  <div id="pending_transactions"
+       style="visibility: hidden">
+    <h2>Pending transactions</h2>
+  </div>
+</center>
+
+<center>
+  <div id="new_wallet"
+       style="visibility: hidden">
+    <button id="button_new_wallet">Create new wallet</button>
+    <div id="new_wallet_values"
+         style="visibility: hidden">
+      <p>Public key</p>
+      <div id="new_public_key"></div>
+      <p>Secret key (if you lose this, it is done.)</p>
+      <div id="new_secret_key"></div>
+
+    </div>
   </div>
 </center>
 
@@ -42,6 +69,21 @@
 <script>
 
   window.onload = function() {
+
+      function createNewWallet() {
+          const kp = nacl.sign.keyPair();
+          sk_hex = toHexString(kp.secretKey);
+          pk_hex = toHexString(kp.publicKey);
+
+          var new_public_key = document.getElementById('new_public_key');
+          new_public_key.innerHTML = pk_hex;
+          var new_secret_key = document.getElementById('new_secret_key');
+          new_secret_key.innerHTML = sk_hex;
+
+          var new_wallet_values = document.getElementById('new_wallet_values');
+          new_wallet_values.style.visibility = 'visible';
+      }
+      
       function create(htmlStr) {
           var frag = document.createDocumentFragment(),
               temp = document.createElement('div');
@@ -80,6 +122,7 @@
               message: toHexString(secret)
           }).then(function (response) {
               console.log(response);
+              window.location.reload(false);
           }).catch(function (error) {
               console.log(error);
           });
@@ -93,46 +136,71 @@
                   if (!balance) {
                       balance = 0;
                   }
+                  var account_img = document.getElementById('account_img');
+                  account_img.innerHTML = '<a href="/account/' + account + '"><img src="hash_img/' + account + '"></a>'; 
+
+                  var account_address = document.getElementById('account_address');
+                  account_address.innerHTML = '' + account + ''; 
+
                   var account_balance = document.getElementById('account_balance');
-                  account_balance.innerHTML = 'Balance: ' + balance; 
+                  account_balance.innerHTML = '<p>Balance:</p><h2>' + balance + '</h2>'; 
                   remove_sk.style.visibility = 'visible';
+
               }).catch(function (error) {
                   console.log(error);
               });
           
       }
-      
-      const kp = nacl.sign.keyPair();
-      sk_hex = toHexString(kp.secretKey);
-      pk_hex = toHexString(kp.publicKey);
-      sk_orig = fromHexString(sk_hex);
-      pk_orig = fromHexString(pk_hex);
-      
-      console.log('kp', kp);
-      console.log('sk_hex', sk_hex);
-      console.log('pk_hex', pk_hex);
-      console.log('sk_orig', sk_orig);
-      console.log('pk_orig', pk_orig);
 
-      const new_kp = nacl.sign.keyPair.fromSecretKey(sk_orig);
-      console.log('new kp', new_kp);
+      const getPendingTx = (account) => {
+          axios.get('/pending_tx/' + account)
+              .then(function (response) {
+                  var pending_transactions = document.querySelector('#pending_transactions');
+                  if (response.data.length > 0) {
+                      pending_transactions.style.visibility = 'visible';
+                  } else {
+                      var tx_inputs = document.getElementById('tx_inputs');
+                      tx_inputs.style.visibility = 'visible';
+                  }
+                  for (let tx in response.data) {
+                      let amount = response.data[tx]['amount'];
+                      let to_address = response.data[tx]['to_address'];
+                      let from_address = response.data[tx]['from_address'];
 
+                      var div = document.createElement("div");
+                      var div_amount = document.createElement("amount");
+                      div_amount.innerHTML = '' + amount;
+                      div.append(div_amount);
+                      var br = document.createElement("br");
+                      div.append(br);
+                      var img_from = document.createElement("img");
+                      img_from.src = '/hash_img/' + from_address;
+                      div.append(img_from);
+                      var img_to = document.createElement("img");
+                      img_to.src = '/hash_img/' + to_address;
+                      div.append(img_to);
+                      pending_transactions.append(div)
 
-      const message = "{'from_address': '', to_address: '', 'amount': 100}";
-      const secret_message = nacl.sign(nacl.util.decodeUTF8(message), sk_orig);
-      const signed_message_hex = toHexString(secret_message);
-
-      const sm_orig = fromHexString(signed_message_hex);
-
-      const opened = nacl.sign.open(sm_orig, pk_orig);
-      console.log('hexed message', signed_message_hex);
-      console.log('opened', nacl.util.encodeUTF8(opened));
-
+                  }
+              }).catch(function (error) {
+                  console.log(error);
+              });
+      }
       
       const storage = window.localStorage;
       const publicKey = storage.getItem('publicKey');
       const secretKey = storage.getItem('secretKey');
+
       if (!secretKey || !publicKey) {
+
+          var new_wallet = document.getElementById('new_wallet');
+          new_wallet.style.visibility = 'visible';
+
+          var button_new_wallet = document.getElementById('button_new_wallet');
+          button_new_wallet.addEventListener('click', () => {
+              createNewWallet();
+          });
+
           var insert_sk = document.getElementById('insert_sk');
           insert_sk.style.visibility = 'visible';
 
@@ -147,7 +215,10 @@
               }
           });
       } else {
+
           getAccountTransactions(publicKey);
+          getPendingTx(publicKey);
+
           var remove_sk = document.getElementById('remove_sk');
           remove_sk.style.visibility = 'visible';
 
@@ -172,7 +243,7 @@
       }
   }
 
-</script>
+  </script>
 
 <script src="{{ url_for('static', filename = 'nacl.min.js') }}" ></script>
 <script src="{{ url_for('static', filename = 'nacl-util.min.js') }}" ></script>

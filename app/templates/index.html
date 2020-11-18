@@ -1,6 +1,14 @@
 <!-- extend base layout -->
 {% extends "base.html" %}
 
+{% block head %}
+<script src="{{ url_for('static', filename = 'moment.js') }}" ></script>
+<script src="{{ url_for('static', filename = 'moment-with-locales.js') }}" ></script>
+<script>
+    moment.locale('fi');
+</script>
+{% endblock %}
+
 {% block content %}
 <br>
 <a href="{{node_address}}/mine" target="_blank"><button>Request to mine</button></a>
@@ -10,19 +18,30 @@
 
     <center>
         {% for tx in transactions %}
+        <br/>
         <div class="tx_box">
-            <span class="timestamp">{{ tx['timestamp'] }}</span>
-            <a href="/account/{{ tx['from_addres'] }}">
+            <div class="timestamp">
+                {{ ts_js(tx) }}
+            </div>
+            <a href="/account/{{ tx['from_address'] }}">
                 <img src="/hash_img/{{ tx['from_address'] }}"
                      width="100px" height="100px">
             </a>
-            <a href="/account/{{ tx['to_addres'] }}">
+            <a href="/account/{{ tx['to_address'] }}">
                 <img src="/hash_img/{{ tx['to_address'] }}"
                      width="100px" height="100px">
             </a>
-            <span class="amount">{{ tx['amount'] }}</span>
+            <h2 class="amount">{{ tx['amount'] }}</h2>
         </div>
         {% endfor %}
     </center>
 </div>
+
+<script>
+
+    console.log('moment.locale();',
+               );
+    
+</script>
+
 {% endblock %}
