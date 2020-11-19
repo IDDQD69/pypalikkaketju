@@ -96,8 +96,7 @@ def get_pending_tx(address=None):
 def index():
     fetch_chain()
     return render_template('index.html',
-                           title='YourNet: Decentralized '
-                                 'content sharing',
+                           title='Seppocoin palikkaketju',
                            transactions=transactions,
                            node_address=CONNECTED_NODE_ADDRESS,
                            readable_time=timestamp_to_string)

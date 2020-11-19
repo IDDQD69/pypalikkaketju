@@ -1,6 +1,14 @@
 <!-- extend base layout -->
 {% extends "base.html" %}
 
+{% block head %}
+<script src="{{ url_for('static', filename = 'moment.js') }}" ></script>
+<script src="{{ url_for('static', filename = 'moment-with-locales.js') }}" ></script>
+<script>
+    moment.locale('fi');
+</script>
+{% endblock %}
+
 {% block content %}
 
 {% if address %}
@@ -9,7 +17,7 @@
   <img src="/hash_img/{{ address }}"
        width="100px" height="100px">
   <p>balance:</p>
-  <h2>{{ balances[address] }}</h2>
+  <h2>{{ balances[address] if address in balances else 0 }} SCP</h2>
 </center>
 
 {% endif %}
@@ -29,7 +37,9 @@
 <center>
   {% for tx in transactions %}
   <div class="tx_box">
-    <span class="timestamp">{{ tx['timestamp'] }}</span>
+    <div class="timestamp">
+      {{ ts_js(tx) }}
+    </div>
     <a href="/account/{{ tx['from_address'] }}">
       <img src="/hash_img/{{ tx['from_address'] }}"
            width="100px" height="100px">
@@ -38,7 +48,7 @@
       <img src="/hash_img/{{ tx['to_address'] }}"
            width="100px" height="100px">
     </a>
-    <span class="amount">{{ tx['amount'] }}</span>
+    <h3 class="amount">{{ tx['amount'] }} SPC</h3>
   </div>
   {% endfor %}
 </center>

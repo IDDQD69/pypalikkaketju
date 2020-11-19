@@ -143,7 +143,7 @@
                   account_address.innerHTML = '' + account + ''; 
 
                   var account_balance = document.getElementById('account_balance');
-                  account_balance.innerHTML = '<p>Balance:</p><h2>' + balance + '</h2>'; 
+                  account_balance.innerHTML = '<p>Balance:</p><h2>' + balance + ' SPC</h2>'; 
                   remove_sk.style.visibility = 'visible';
 
               }).catch(function (error) {
@@ -169,7 +169,7 @@
 
                       var div = document.createElement("div");
                       var div_amount = document.createElement("amount");
-                      div_amount.innerHTML = '' + amount;
+                      div_amount.innerHTML = '' + amount + ' SPC';
                       div.append(div_amount);
                       var br = document.createElement("br");
                       div.append(br);

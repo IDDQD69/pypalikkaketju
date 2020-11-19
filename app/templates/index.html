@@ -10,9 +10,6 @@
 {% endblock %}
 
 {% block content %}
-<br>
-<a href="{{node_address}}/mine" target="_blank"><button>Request to mine</button></a>
-<a href="/"><button>Resync</button></a>
 
 <div style="margin: 20px;">
 
@@ -31,7 +28,7 @@
                 <img src="/hash_img/{{ tx['to_address'] }}"
                      width="100px" height="100px">
             </a>
-            <h2 class="amount">{{ tx['amount'] }}</h2>
+            <h3 class="amount">{{ tx['amount'] }} SPC</h3>
         </div>
         {% endfor %}
     </center>
