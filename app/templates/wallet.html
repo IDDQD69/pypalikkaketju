@@ -4,12 +4,12 @@
 {% block content %}
 
 <div id="remove_sk"
-     style="visibility: hidden">
+     style="display: none">
   <button id="button_logout">logout</button>
 </div>
 <center>
   <div id="insert_sk"
-       style="visibility: hidden">
+       style="display: none">
     <input id="input_sk" size="50" type="password"
            placeholder="Insert your secret key">
     <button id="button_login">ok</button>
@@ -18,20 +18,19 @@
 
 <center>
   <div id="make_transaction"
-       style="visibility: hidden">
+       style="display: none">
 
     <div id="account_img"></div>
     <div id="account_address"></div>
     <div id="account_balance"></div>
 
-    <div id="tx_inputs"
-         style="visibility: visible">
-      <input id="input_tx_to_address" size="50"
+    <div id="tx_inputs">
+      <input id="input_tx_to_address" size="40"
              type="text"
-             placeholder="To address">
-      <input id="input_tx_amount" size="10"
+             placeholder="To address"><br>
+      <input id="input_tx_amount" size="20"
              type="number" min="1"
-             placeholder="Amount"><br>
+             placeholder="Amount">
       <input id="button_make_tx"
              type="submit" value="Make transaction">
     </div>
@@ -39,18 +38,41 @@
 </center>
 
 <center>
+  <br><br>
+  <div id="directory"
+       style="display: none">
+    <div="directory_new">
+      <input id="input_directory_address" size="40"
+             type="text"
+             placeholder="Address"><br>
+      <input id="input_directory_desc" size="40"
+             type="text"
+             placeholder="Description"><br>
+      <input id="button_add_directory"
+             type="submit"
+             value="Add to directory">
+  </div>
+  <div="directory_items">
+
+</div>
+</div>
+</center>
+
+<center>
   <div id="pending_transactions"
-       style="visibility: hidden">
+       style="display: none">
     <h2>Pending transactions</h2>
   </div>
 </center>
 
 <center>
   <div id="new_wallet"
-       style="visibility: hidden">
+       style="display: none">
+
     <button id="button_new_wallet">Create new wallet</button>
     <div id="new_wallet_values"
-         style="visibility: hidden">
+         style="display: none">
+      <img id="new_hash_img">
       <p>Public key</p>
       <div id="new_public_key"></div>
       <p>Secret key (if you lose this, it is done.)</p>
@@ -70,18 +92,27 @@
 
   window.onload = function() {
 
+      function getInputValue(elementId) {
+          return document.getElementById(elementId).value;
+      }
+      function setDisplay(elementId, display='block') {
+          var elem = document.getElementById(elementId);
+          elem.style.display = display;
+      }
+      
       function createNewWallet() {
           const kp = nacl.sign.keyPair();
           sk_hex = toHexString(kp.secretKey);
           pk_hex = toHexString(kp.publicKey);
 
+          var new_hash_img = document.getElementById('new_hash_img');
+          new_hash_img.src = '/hash_img/' + pk_hex;
           var new_public_key = document.getElementById('new_public_key');
           new_public_key.innerHTML = pk_hex;
           var new_secret_key = document.getElementById('new_secret_key');
           new_secret_key.innerHTML = sk_hex;
 
-          var new_wallet_values = document.getElementById('new_wallet_values');
-          new_wallet_values.style.visibility = 'visible';
+          setDisplay('new_wallet_values');
       }
       
       function create(htmlStr) {
@@ -144,7 +175,6 @@
 
                   var account_balance = document.getElementById('account_balance');
                   account_balance.innerHTML = '<p>Balance:</p><h2>' + balance + ' SPC</h2>'; 
-                  remove_sk.style.visibility = 'visible';
 
               }).catch(function (error) {
                   console.log(error);
@@ -157,10 +187,10 @@
               .then(function (response) {
                   var pending_transactions = document.querySelector('#pending_transactions');
                   if (response.data.length > 0) {
-                      pending_transactions.style.visibility = 'visible';
+                      setDisplay('pending_transactions');
                   } else {
-                      var tx_inputs = document.getElementById('tx_inputs');
-                      tx_inputs.style.visibility = 'visible';
+                      // var tx_inputs = document.getElementById('tx_inputs');
+                      // tx_inputs.style.visibility = 'visible';
                   }
                   for (let tx in response.data) {
                       let amount = response.data[tx]['amount'];
@@ -193,16 +223,13 @@
 
       if (!secretKey || !publicKey) {
 
-          var new_wallet = document.getElementById('new_wallet');
-          new_wallet.style.visibility = 'visible';
+          setDisplay('new_wallet');
+          setDisplay('insert_sk');
 
           var button_new_wallet = document.getElementById('button_new_wallet');
           button_new_wallet.addEventListener('click', () => {
               createNewWallet();
           });
-
-          var insert_sk = document.getElementById('insert_sk');
-          insert_sk.style.visibility = 'visible';
 
           var button_login = document.getElementById('button_login');
           button_login.addEventListener('click', () => {
@@ -219,11 +246,9 @@
           getAccountTransactions(publicKey);
           getPendingTx(publicKey);
 
-          var remove_sk = document.getElementById('remove_sk');
-          remove_sk.style.visibility = 'visible';
-
-          var make_transaction = document.getElementById('make_transaction');
-          make_transaction.style.visibility = 'visible';
+          setDisplay('remove_sk');
+          setDisplay('make_transaction');
+          setDisplay('directory');
 
           var button_logout = document.getElementById('button_logout');
           button_logout.addEventListener('click', () => {
@@ -239,6 +264,30 @@
                               input_tx_amount.value,
                               secretKey,
                               publicKey);
+          });
+
+          var button_add_directory = document.getElementById('button_add_directory');
+          button_add_directory.addEventListener('click', () => {
+
+              var address = getInputValue('input_directory_address');
+              var desc = getInputValue('input_directory_desc');
+
+              const kp = nacl.sign.keyPair.fromSecretKey(fromHexString(secretKey));
+              const secret = nacl.sign(nacl.util.decodeUTF8(publicKey), kp.secretKey);
+              const hexed = toHexString(secret)
+              axios.post('/directory', {
+                  public_key: publicKey,
+                  signed_public_key: hexed
+              }).then(function (response) {
+                  console.log(response);
+                  window.location.reload(false);
+              }).catch(function (error) {
+                  console.log(error);
+              });
+              
+
+              console.log('moi');
+
           });
       }
   }

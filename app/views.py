@@ -3,6 +3,9 @@ import json
 import io
 import tempfile
 
+from io import BytesIO
+import sqlite3
+
 import pagan
 
 import requests
@@ -13,6 +16,8 @@ from flask import jsonify
 from flask import send_file
 
 from app import app
+
+from signing.verify import verify_data
 
 # The node with which our application interacts, there can be multiple
 # such nodes as well.
@@ -54,6 +59,20 @@ def fetch_chain():
         global transactions
         transactions = sorted(content, key=lambda k: k['timestamp'],
                        reverse=True)
+
+
+@app.route('/directory')
+def get_directory():
+    return jsonify({})
+
+@app.route('/directory', methods=['POST'])
+def set_directory():
+    data = request.get_json()
+    public_key = data['public_key']
+    signed_public_key = data['signed_public_key']
+    given_public_key = verify_data(data_hex=signed_public_key, key_hex=public_key)
+    bytes.decode(given_public_key)
+    return jsonify(data)
 
 @app.route('/wallet')
 def wallet():
@@ -116,12 +135,16 @@ def submit_textarea():
     return jsonify({'status_code': result.status_code,
                     'status_text': result.text})
 
+def serve_pil_image(pil_img):
+    img_io = BytesIO()
+    pil_img.save(img_io, 'PNG')
+    img_io.seek(0)
+    return send_file(img_io, mimetype='image/png')
+
 @app.route('/hash_img/<value>')
 def get_hash_img(value):
-    tmpf = tempfile.mkstemp(".png")[1]
     p = pagan.Avatar(value, pagan.SHA256)
-    p.save("/", tmpf)
-    return send_file(tmpf, mimetype='image/jpeg')
+    return serve_pil_image(p.img)
 
 def timestamp_to_string(epoch_time):
     return datetime.datetime.fromtimestamp(epoch_time).strftime('%H:%M')
