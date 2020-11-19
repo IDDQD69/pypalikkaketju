@@ -47,7 +47,7 @@ class Blockchain:
         transaction = {'amount': amount,
                        'from_address': '0',
                        'to_address': to_address,
-                       'timestamp': arrow.utcnow().format(),
+                       'timestamp': arrow.get('2069-12-28 13:37:00+00:00').format(),
                        'status': 1}
         genesis_block = Block(0, [transaction], 0, "0")
         genesis_block.hash = genesis_block.compute_hash()
@@ -117,7 +117,7 @@ class Blockchain:
             delattr(block, "hash")
 
             if not cls.is_valid_proof(block, block_hash) or \
-                    previous_hash != block.previous_hash:
+               previous_hash != block.previous_hash:
                 result = False
                 break
 
@@ -130,9 +130,6 @@ class Blockchain:
         balance = 0
         for block in self.chain:
             for tx in block.transactions:
-
-                if 'status' not in tx:
-                    print('tx', tx)
 
                 if tx['status'] != 1:
                     continue
@@ -210,15 +207,15 @@ def before_first_request():
     log_level = logging.INFO
     for handler in app.logger.handlers:
         app.logger.removeHandler(handler)
-    root = os.path.dirname(os.path.abspath(__file__))
-    logdir = os.path.join(root, 'logs')
+        root = os.path.dirname(os.path.abspath(__file__))
+        logdir = os.path.join(root, 'logs')
     if not os.path.exists(logdir):
         os.mkdir(logdir)
-    log_file = os.path.join(logdir, 'app.log')
-    handler = logging.FileHandler(log_file)
-    handler.setLevel(log_level)
-    app.logger.addHandler(handler)
-    app.logger.setLevel(log_level)
+        log_file = os.path.join(logdir, 'app.log')
+        handler = logging.FileHandler(log_file)
+        handler.setLevel(log_level)
+        app.logger.addHandler(handler)
+        app.logger.setLevel(log_level)
 
 # endpoint to submit a new transaction. This will be used by
 # our application to add new data (posts) to the blockchain
@@ -268,7 +265,7 @@ def get_chain():
 
 
 def _update_balances(balances, from_address,
-                    to_address, amount):
+                     to_address, amount):
     balances[from_address] = balances.get(from_address, 0) - amount
     balances[to_address] = balances.get(to_address, 0) + amount
 
@@ -287,7 +284,7 @@ def get_transactions(address=None):
             if tx['status'] == 1:
                 _update_balances(balances, tx['from_address'],
                                  tx['to_address'], tx['amount'])
-            transactions.append(tx)
+                transactions.append(tx)
     return json.dumps({"length": len(transactions),
                        "balances": balances,
                        "transactions": transactions})
@@ -318,11 +315,12 @@ def register_new_peers():
         return "Invalid data", 400
 
     # Add the node to the peer list
+    chain = get_chain()
     peers.add(node_address)
 
     # Return the consensus blockchain to the newly registered node
     # so that he can sync
-    return get_chain()
+    return chain
 
 
 @app.route('/register_with', methods=['POST'])
@@ -349,6 +347,7 @@ def register_with_existing_node():
         # update chain and the peers
         chain_dump = response.json()['chain']
         blockchain = create_chain_from_dump(chain_dump)
+        peers.add(node_address)
         peers.update(response.json()['peers'])
         return "Registration successful", 200
     else:
@@ -419,13 +418,20 @@ def consensus():
     longest_chain = None
     current_len = len(blockchain.chain)
 
+    remove_nodes = []
     for node in peers:
-        response = requests.get('{}chain'.format(node))
-        length = response.json()['length']
-        chain = response.json()['chain']
-        if length > current_len and blockchain.check_chain_validity(chain):
-            current_len = length
-            longest_chain = chain
+        try:
+            response = requests.get('{}chain'.format(node))
+            length = response.json()['length']
+            chain = response.json()['chain']
+            if length > current_len and blockchain.check_chain_validity(chain):
+                current_len = length
+                longest_chain = chain
+        except requests.exceptions.ConnectionError as e:
+            remove_nodes.append(node)
+
+    for node in remove_nodes:
+        peers.remove(node)
 
     if longest_chain:
         blockchain = longest_chain
@@ -440,12 +446,25 @@ def announce_new_block(block):
     Other blocks can simply verify the proof of work and add it to their
     respective chains.
     """
+
+    error_peers = []
+    print('peers', peers)
+
     for peer in peers:
-        url = "{}add_block".format(peer)
-        headers = {'Content-Type': "application/json"}
-        requests.post(url,
-                      data=json.dumps(block.__dict__, sort_keys=True),
-                      headers=headers)
+        try:
+            url = f"{peer}add_block"
+            headers = {'Content-Type': "application/json"}
+            requests.post(url,
+                        data=json.dumps(block.__dict__, sort_keys=True),
+                        headers=headers)
+        except Exception as e:
+            # print('announce error', peer, e)
+            error_peers.append(peer)
+
+    for ep in error_peers:
+        peers.remove(ep)
+
+    print('peers', peers)
 
 # Uncomment this line if you want to specify the port number in the code
 app.run(debug=True, port=8000, host='0.0.0.0')
