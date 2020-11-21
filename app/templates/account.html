@@ -14,7 +14,7 @@
 {% if address %}
 
 <center>
-  <img src="/hash_img/{{ address }}"
+  <img src="{{ prefix }}/hash_img/{{ address }}"
        width="100px" height="100px">
   <p>balance:</p>
   <h2>{{ balances[address] if address in balances else 0 }} SCP</h2>
@@ -40,12 +40,12 @@
     <div class="timestamp">
       {{ ts_js(tx) }}
     </div>
-    <a href="/account/{{ tx['from_address'] }}">
-      <img src="/hash_img/{{ tx['from_address'] }}"
+    <a href="{{prefix }}/account/{{ tx['from_address'] }}">
+      <img src="{{ prefix }}/hash_img/{{ tx['from_address'] }}"
            width="100px" height="100px">
     </a>
-    <a href="/account/{{ tx['to_address'] }}">
-      <img src="/hash_img/{{ tx['to_address'] }}"
+    <a href="{{ prefix }}/account/{{ tx['to_address'] }}">
+      <img src="{{ prefix }}/hash_img/{{ tx['to_address'] }}"
            width="100px" height="100px">
     </a>
     <h3 class="amount">{{ tx['amount'] }} SPC</h3>
@@ -64,7 +64,7 @@
       var input_address = document.getElementById('input_address');
       var button_search_address = document.getElementById('button_search_address');
       button_search_address.addEventListener('click', () => {
-          window.location.href = '/account/' + input_address.value;
+          window.location.href = '{{ prefix }}/account/' + input_address.value;
       });
       const storage = window.localStorage;
       const publicKey = storage.getItem('publicKey');

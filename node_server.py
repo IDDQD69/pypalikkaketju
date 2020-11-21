@@ -3,11 +3,13 @@ import logging
 import json
 import os
 import arrow
+import sqlite3
 
 from flask import Flask, request
 import requests
 
 from signing.verify import verify_data
+
 
 class Block:
     def __init__(self, index, transactions,
@@ -43,7 +45,7 @@ class Blockchain:
         a valid hash.
         """
         amount = 9223372036854775807
-        to_address = 'e8eefa68b47179762906cfaf2603e3afec81a993cd984207a935d168528c07a5'
+        to_address = os.getenv('SPC_MASTER_PK')
         transaction = {'amount': amount,
                        'from_address': '0',
                        'to_address': to_address,
@@ -56,6 +58,48 @@ class Blockchain:
     @property
     def last_block(self):
         return self.chain[-1]
+
+    def restore(self):
+        generated_blockchain = Blockchain()
+        generated_blockchain.create_genesis_block()
+        conn = sqlite3.connect('blockchain.db')
+        c = conn.cursor()
+        sql = """
+        CREATE TABLE IF NOT EXISTS block (
+            i INTEGER PRIMARY KEY,
+            v TEXT NOT NULL
+        );
+        """
+        c.execute(sql)
+        c.execute('SELECT * FROM block ORDER BY i ASC')
+        for b in c.fetchall():
+            block_data = json.loads(b[1])
+            block = Block(block_data["index"],
+                          block_data["transactions"],
+                          block_data["timestamp"],
+                          block_data["previous_hash"],
+                          block_data["nonce"])
+            proof = block_data['hash']
+            generated_blockchain.add_block(block, proof)
+        conn.close()
+        self.chain = generated_blockchain.chain
+
+    def preserve_blockchain(self):
+        conn = sqlite3.connect('blockchain.db')
+        c = conn.cursor()
+        c.execute("DELETE FROM block;")
+        for block in self.chain:
+            if block.index == 0:
+                continue
+            data = json.dumps(block.__dict__, sort_keys=True)
+            insert_sql = f"""
+            INSERT INTO block (i, v)
+            VALUES (?, ?);
+            """
+            values = [block.index, data]
+            c.execute(insert_sql, values)
+        conn.commit()
+        conn.close()
 
     def add_block(self, block, proof):
         """
@@ -150,7 +194,6 @@ class Blockchain:
             to_address = tx['to_address']
             amount = tx['amount']
 
-
             from_balance = self.get_balance(from_address)
             from_balance += current_block_balances.get(from_address, 0)
 
@@ -186,6 +229,7 @@ class Blockchain:
 
         proof = self.proof_of_work(new_block)
         self.add_block(new_block, proof)
+        self.preserve_blockchain()
 
         self.unconfirmed_transactions = []
 
@@ -197,7 +241,9 @@ app.url_map.strict_slashes = False
 
 # the node's copy of blockchain
 blockchain = Blockchain()
-blockchain.create_genesis_block()
+blockchain.restore()
+if len(blockchain.chain) == 0:
+    blockchain.create_genesis_block()
 
 # the address to other participating members of the network
 peers = set()
@@ -258,6 +304,8 @@ def new_transaction():
 def get_chain():
     chain_data = []
     for block in blockchain.chain:
+        if block.index == 0:
+            continue
         chain_data.append(block.__dict__)
     return json.dumps({"length": len(chain_data),
                        "chain": chain_data,
@@ -347,6 +395,7 @@ def register_with_existing_node():
         # update chain and the peers
         chain_dump = response.json()['chain']
         blockchain = create_chain_from_dump(chain_dump)
+        blockchain.preserve_blockchain()
         peers.add(node_address)
         peers.update(response.json()['peers'])
         return "Registration successful", 200
@@ -391,6 +440,7 @@ def verify_and_add_block():
     if not added:
         return "The block was discarded by the node", 400
 
+    blockchain.preserve_blockchain()
     return "Block added to the chain", 201
 
 
@@ -448,7 +498,6 @@ def announce_new_block(block):
     """
 
     error_peers = []
-    print('peers', peers)
 
     for peer in peers:
         try:
@@ -458,13 +507,10 @@ def announce_new_block(block):
                         data=json.dumps(block.__dict__, sort_keys=True),
                         headers=headers)
         except Exception as e:
-            # print('announce error', peer, e)
             error_peers.append(peer)
 
     for ep in error_peers:
         peers.remove(ep)
 
-    print('peers', peers)
-
 # Uncomment this line if you want to specify the port number in the code
-app.run(debug=True, port=8000, host='0.0.0.0')
+# app.run(debug=True, port=8000, host='0.0.0.0')

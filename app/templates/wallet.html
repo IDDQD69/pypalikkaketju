@@ -106,7 +106,7 @@
           pk_hex = toHexString(kp.publicKey);
 
           var new_hash_img = document.getElementById('new_hash_img');
-          new_hash_img.src = '/hash_img/' + pk_hex;
+          new_hash_img.src = '{{ prefix }}/hash_img/' + pk_hex;
           var new_public_key = document.getElementById('new_public_key');
           new_public_key.innerHTML = pk_hex;
           var new_secret_key = document.getElementById('new_secret_key');
@@ -148,7 +148,7 @@
           const obj_str = JSON.stringify(obj);
           const secret = nacl.sign(nacl.util.decodeUTF8(obj_str), kp.secretKey);
 
-          axios.post('/submit', {
+          axios.post('{{ prefix }}/submit', {
               public_key: public_key,
               message: toHexString(secret)
           }).then(function (response) {
@@ -160,7 +160,7 @@
       };
 
       const getAccountTransactions = (account) => {
-          axios.get('/transactions/' + account)
+          axios.get('{{ prefix }}/transactions/' + account)
               .then(function (response) {
                   console.log(response);
                   var balance = response.data['balances'][account]
@@ -168,7 +168,7 @@
                       balance = 0;
                   }
                   var account_img = document.getElementById('account_img');
-                  account_img.innerHTML = '<a href="/account/' + account + '"><img src="hash_img/' + account + '"></a>'; 
+                  account_img.innerHTML = '<a href="{{ prefix }}/account/' + account + '"><img src="{{ prefix }}/hash_img/' + account + '"></a>'; 
 
                   var account_address = document.getElementById('account_address');
                   account_address.innerHTML = '' + account + ''; 
@@ -183,7 +183,7 @@
       }
 
       const getPendingTx = (account) => {
-          axios.get('/pending_tx/' + account)
+          axios.get('{{ prefix }}/pending_tx/' + account)
               .then(function (response) {
                   var pending_transactions = document.querySelector('#pending_transactions');
                   if (response.data.length > 0) {
@@ -204,10 +204,10 @@
                       var br = document.createElement("br");
                       div.append(br);
                       var img_from = document.createElement("img");
-                      img_from.src = '/hash_img/' + from_address;
+                      img_from.src = '{{ prefix }}/hash_img/' + from_address;
                       div.append(img_from);
                       var img_to = document.createElement("img");
-                      img_to.src = '/hash_img/' + to_address;
+                      img_to.src = '{{ prefix }}/hash_img/' + to_address;
                       div.append(img_to);
                       pending_transactions.append(div)
 
@@ -248,7 +248,7 @@
 
           setDisplay('remove_sk');
           setDisplay('make_transaction');
-          setDisplay('directory');
+          // setDisplay('directory');
 
           var button_logout = document.getElementById('button_logout');
           button_logout.addEventListener('click', () => {
@@ -275,7 +275,7 @@
               const kp = nacl.sign.keyPair.fromSecretKey(fromHexString(secretKey));
               const secret = nacl.sign(nacl.util.decodeUTF8(publicKey), kp.secretKey);
               const hexed = toHexString(secret)
-              axios.post('/directory', {
+              axios.post('{{ prefix }}/directory', {
                   public_key: publicKey,
                   signed_public_key: hexed
               }).then(function (response) {
@@ -284,10 +284,6 @@
               }).catch(function (error) {
                   console.log(error);
               });
-              
-
-              console.log('moi');
-
           });
       }
   }

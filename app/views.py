@@ -4,6 +4,7 @@ import io
 import tempfile
 
 from io import BytesIO
+from os import getenv
 import sqlite3
 
 import pagan
@@ -21,7 +22,8 @@ from signing.verify import verify_data
 
 # The node with which our application interacts, there can be multiple
 # such nodes as well.
-CONNECTED_NODE_ADDRESS = "http://127.0.0.1:8000"
+CONNECTED_NODE_ADDRESS = getenv('SPC_NODE') # "http://localhost:8000"
+PREFIX = getenv('SPC_PREFIX', '') # '/spc'
 
 transactions = []
 
@@ -76,7 +78,7 @@ def set_directory():
 
 @app.route('/wallet')
 def wallet():
-    return render_template('wallet.html')
+    return render_template('wallet.html', prefix=PREFIX)
 
 @app.route('/account/')
 @app.route('/account/<address>')
@@ -93,6 +95,7 @@ def account(address=None):
                               key=lambda k: k['timestamp'],
                               reverse=True)
     return render_template('account.html',
+                           prefix=PREFIX,
                            address=address,
                            balances=balances,
                            transactions=transactions)
@@ -111,15 +114,15 @@ def get_pending_tx(address=None):
     response = requests.get(get_chain_address)
     return response.text
 
-@app.route('/')
+@app.route(f'/')
 def index():
     fetch_chain()
     return render_template('index.html',
+                           prefix=PREFIX,
                            title='Seppocoin palikkaketju',
                            transactions=transactions,
                            node_address=CONNECTED_NODE_ADDRESS,
                            readable_time=timestamp_to_string)
-
 
 @app.route('/submit', methods=['POST'])
 def submit_textarea():

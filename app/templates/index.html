@@ -20,12 +20,12 @@
             <div class="timestamp">
                 {{ ts_js(tx) }}
             </div>
-            <a href="/account/{{ tx['from_address'] }}">
-                <img src="/hash_img/{{ tx['from_address'] }}"
+            <a href="{{ prefix }}/account/{{ tx['from_address'] }}">
+                <img src="{{ prefix }}/hash_img/{{ tx['from_address'] }}"
                      width="100px" height="100px">
             </a>
-            <a href="/account/{{ tx['to_address'] }}">
-                <img src="/hash_img/{{ tx['to_address'] }}"
+            <a href="{{ prefix }}/account/{{ tx['to_address'] }}">
+                <img src="{{ prefix }}/hash_img/{{ tx['to_address'] }}"
                      width="100px" height="100px">
             </a>
             <h3 class="amount">{{ tx['amount'] }} SPC</h3>
@@ -33,12 +33,5 @@
         {% endfor %}
     </center>
 </div>
-
-<script>
-
-    console.log('moment.locale();',
-               );
-    
-</script>
 
 {% endblock %}
