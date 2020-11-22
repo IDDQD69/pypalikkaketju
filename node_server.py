@@ -4,6 +4,7 @@ import json
 import os
 import arrow
 import sqlite3
+import time
 
 from flask import Flask, request
 import requests
@@ -49,10 +50,11 @@ class Blockchain:
         transaction = {'amount': amount,
                        'from_address': '0',
                        'to_address': to_address,
-                       'timestamp': arrow.get('2069-12-28 13:37:00+00:00').format(),
+                       'timestamp': arrow.get('1969-12-28 13:37:00+00:00').format(),
                        'status': 1}
         genesis_block = Block(0, [transaction], 0, "0")
         genesis_block.hash = genesis_block.compute_hash()
+        app.logger.info(f'create genesisblock: {genesis_block.hash}')
         self.chain.append(genesis_block)
 
     @property
@@ -60,6 +62,7 @@ class Blockchain:
         return self.chain[-1]
 
     def restore(self):
+        tic = time.perf_counter()
         generated_blockchain = Blockchain()
         generated_blockchain.create_genesis_block()
         conn = sqlite3.connect('blockchain.db')
@@ -80,9 +83,13 @@ class Blockchain:
                           block_data["previous_hash"],
                           block_data["nonce"])
             proof = block_data['hash']
-            generated_blockchain.add_block(block, proof)
+            added = generated_blockchain.add_block(block, proof)
+            app.logger.info(f'added block {added} {block.index} {block.previous_hash}')
         conn.close()
         self.chain = generated_blockchain.chain
+        toc = time.perf_counter()
+        app.logger.info(f"restore: {len(self.chain)} blocks in {toc - tic:0.4f}s")
+
 
     def preserve_blockchain(self):
         conn = sqlite3.connect('blockchain.db')
@@ -172,16 +179,17 @@ class Blockchain:
 
     def get_balance(self, address):
         balance = 0
+        tic = time.perf_counter()
         for block in self.chain:
             for tx in block.transactions:
-
                 if tx['status'] != 1:
                     continue
-
                 if tx['from_address'] == address:
                     balance -= tx['amount']
                 elif tx['to_address'] == address:
                     balance += tx['amount']
+        toc = time.perf_counter()
+        app.logger.info(f"get_balance: {address} {balance} in {toc - tic:0.4f}s")
         return balance
     
     def validate_block_transactions(self, transactions):
@@ -235,10 +243,23 @@ class Blockchain:
 
         return True
 
+def setup_logger():
+    log_level = logging.INFO
+    for handler in app.logger.handlers:
+        app.logger.removeHandler(handler)
+        root = os.path.dirname(os.path.abspath(__file__))
+        logdir = os.path.join(root, 'logs')
+    if not os.path.exists(logdir):
+        os.mkdir(logdir)
+    log_file = os.path.join(logdir, 'app.log')
+    handler = logging.FileHandler(log_file)
+    handler.setLevel(log_level)
+    app.logger.addHandler(handler)
+    app.logger.setLevel(log_level)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-
+setup_logger()
 # the node's copy of blockchain
 blockchain = Blockchain()
 blockchain.restore()
@@ -248,20 +269,6 @@ if len(blockchain.chain) == 0:
 # the address to other participating members of the network
 peers = set()
 
-@app.before_first_request
-def before_first_request():
-    log_level = logging.INFO
-    for handler in app.logger.handlers:
-        app.logger.removeHandler(handler)
-        root = os.path.dirname(os.path.abspath(__file__))
-        logdir = os.path.join(root, 'logs')
-    if not os.path.exists(logdir):
-        os.mkdir(logdir)
-        log_file = os.path.join(logdir, 'app.log')
-        handler = logging.FileHandler(log_file)
-        handler.setLevel(log_level)
-        app.logger.addHandler(handler)
-        app.logger.setLevel(log_level)
 
 # endpoint to submit a new transaction. This will be used by
 # our application to add new data (posts) to the blockchain
@@ -287,8 +294,6 @@ def new_transaction():
 
     tx_data["amount"] = int(tx_data["amount"])
     tx_data["timestamp"] = arrow.utcnow().format()
-    tx_data["message"] = message
-    tx_data["balance"] = 0
     tx_data["status"] = 0
 
     blockchain.add_new_transaction(tx_data)
@@ -304,8 +309,6 @@ def new_transaction():
 def get_chain():
     chain_data = []
     for block in blockchain.chain:
-        if block.index == 0:
-            continue
         chain_data.append(block.__dict__)
     return json.dumps({"length": len(chain_data),
                        "chain": chain_data,
