@@ -29,21 +29,35 @@ import json
 import nacl.secret
 import nacl.utils
 
+import datetime
 import arrow
 
 from os import environ
 
 # pip install python-telegram-bot
 # pip install peewee
+#
+# export tbot_api=''
+# export spc_url=''
+# export spc_wallet=''
 
 db = SqliteDatabase('spc.db')
 
-ROLL_PRICE = 100
+roll_messages = []
 
+class Dice(Model):
+    user_id = IntegerField()
+    emoji = CharField()
+    value = IntegerField()
+    datetime = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = db
 
 class Roll(Model):
     user_id = IntegerField(primary_key=True)
-    count = IntegerField()
+    bet = IntegerField()
+    balance = IntegerField()
 
     class Meta:
         database = db
@@ -69,28 +83,20 @@ class Address(Model):
 
 def _create_tables():
     with db:
-        db.create_tables([Roll, Transaction, Address])
+        db.create_tables([Roll, Transaction,
+                          Address, Dice])
 
 def _get_keys(secret_key):
     public_key = crypto_sign_ed25519_sk_to_pk(bytes.fromhex(secret_key))
     return secret_key, public_key.hex()
 
-def _get_roll_count(user_id):
+def _get_roll(user_id):
     try:
-        return Roll.get(Roll.user_id==user_id).count
+        return Roll.get(Roll.user_id==user_id)
     except Exception as e:
-        return 0
-
-def _set_roll_count(user_id, count):
-    try:
-        Roll\
-            .insert(user_id=user_id, count=count)\
-            .on_conflict('replace')\
-            .execute()
-        return True
-    except Exception as e:
-        print('e', e)
-        return False
+        return Roll.create(user_id=user_id,
+                           bet=0,
+                           balance=0)
 
 _create_tables()
 token = environ['tbot_api']
@@ -102,7 +108,7 @@ secret_key, public_key = _get_keys(spc_wallet)
 updater = Updater(token, use_context=True)
 
 
-def address(update: Update, context: CallbackContext) -> None:
+def cmd_address(update: Update) -> None:
     arguments = update.message.text.split(' ')
     if len(arguments) == 1:
         text = 'Osoitteet:\n'
@@ -123,39 +129,88 @@ def address(update: Update, context: CallbackContext) -> None:
         update.message.reply_text('Osoite lisätty!')
 
 
-def roll(update: Update, context: CallbackContext) -> None:
+def cmd_roll(update: Update) -> None:
     arguments = update.message.text.split(' ')
+    user_id = update.effective_user.id
     try:
-        user_id = update.effective_user.id
+        roll = _get_roll(user_id)
+        if (len(arguments) > 2 and
+            arguments[1] == 'bet'):
+
+            roll.bet = int(arguments[2])
+            roll.save()
         address = Address.get(Address.user_id==user_id)
-        roll_count = _get_roll_count(user_id)
-        update.message.reply_text(f'Pelejä jäljellä: {roll_count}')
+        return_message = (
+            '-- Tilisi tiedot -- \n'
+            f'Peliti: {roll.balance} SPC\n'
+            f'Panos: {roll.bet}\n'
+        )
+        update.message.reply_text(return_message)
     except Exception as e:
+        print(e)
         update.message.reply_text('Osoitetta ei lisätty.')
 
+def get_roll_message(update, dice, bet, new_balance):
+    # 43 lemonparty
+    # 22 rypaleet
+    # 1 bar
+    # 64 777
+    win_value = 0
+    if dice.value in [43, 22, 1]:
+        win_value = bet * 5
+    elif dice.value == 64:
+        win_Value = bet * 10
+    return {
+        'timestamp': arrow.get().shift(seconds=3).datetime,
+        'update': update,
+        'win_value': win_value,
+        'rolls_left': rolls_left
+    }
+
+def get_help_text():
+    return (
+        'komennot: \n'
+        '!osoite -- listaa osoitteet \n'
+        '!osoite <julkinen osoite> -- lisää oma osoitteesi listaan \n'
+        '\n'
+        'Slots! \n'
+        'Lisää osoitteesi komennolla !osoite <julkinen osoite> \n'
+        'Lähetä SPC osoitteeseen: \n'
+        f'{public_key} \n\n'
+        'Varat ilmestyvät pelitilillesi muutamassa minuutissa. '
+        'Voit tarkistaa tilin komennolla !roll \n'
+        '!roll -- näet tilisi tiedot.'
+        '!roll bet <summa> -- aseta haluamasi panos'
+    )
+
 def message(update, context):
+    if update.message.text:
+        args = update.message.text.split(' ')
+        if args[0] == '!help':
+            update.message.reply_text(get_help_text())
+        elif args[0] == '!osoite':
+            cmd_address(update)
+        elif args[0] == '!roll':
+            cmd_roll(update)
+    if update.message.dice:
+        handle_dice(update)
+
+def handle_dice(update):
     try:
         user_id = update.effective_user.id
-        if '🎰' == update.message.dice.emoji:
-            roll_count = _get_roll_count(user_id)
+        dice = update.message.dice
+        roll = _get_roll(user_id)
+        if '🎰' == dice.emoji:
             if roll_count > 0:
-                _set_roll_count(user_id, roll_count - 1)
-                print('rolled!')
-            else:
-                print('no rolls')
-            print('update', update.message.dice)
+                new_roll_count = roll_count - 1
+                _set_roll_count(user_id, new_roll_count)
+                message = get_roll_message(update, dice, new_roll_count)
+                Dice.create(user_id=user_id, emoji=dice.emoji, value=dice.value)
+                global roll_messages
+                roll_messages.append(message)
     except:
         pass
 
-
-updater.dispatcher.add_handler(MessageHandler(filters=Filters.all,
-                                              callback=message))
-updater.dispatcher.add_handler(CommandHandler(command='osoite',
-                                              filters=Filters.all,
-                                              callback=address))
-updater.dispatcher.add_handler(CommandHandler(command='roll',
-                                              filters=Filters.all,
-                                              callback=roll))
 
 def _get_transactions():
     transactions = []
@@ -170,7 +225,7 @@ def _get_transactions():
 
 def _get_default_timestamp():
     arw = arrow.utcnow()
-    arw = arw.shift(days=-1)
+    arw = arw.shift(days=-30)
     return arw.datetime
 
 def _get_address_timestamps():
@@ -189,24 +244,40 @@ def _update_timestamp(address, timestamp):
 def job_callback(st):
     timestamps = _get_address_timestamps()
     for tx in _get_transactions():
+        if tx['to_address'] != public_key:
+            continue
         try:
+            print('we move on')
             address = Address.get(Address.address==tx['from_address'])
             timestamp = timestamps.get(address.address, _get_default_timestamp())
             tx_timestamp = arrow.get(tx['timestamp'])
-            if timestamp > tx_timestamp:
+            # TODO ASSING TX TIMESTAMP TO USER
+            print('tx', timestamp, tx_timestamp)
+            if timestamp < tx_timestamp:
+                print('no new transactions for ', address.address)
                 continue
             else:
                 amount = tx['amount']
-                new_rolls = int(amount / ROLL_PRICE)
-                old_rolls = _get_roll_count(address.user_id)
-                print('new rolls', new_rolls, 'old rolls', old_rolls)
-                _set_roll_count(address.user_id, new_rolls + old_rolls)
+                roll = _get_roll(address.user_id)
+                roll.balance = roll.balance + amount
+                roll.save()
         except Exception as e:
+            print('e', e)
             pass
+
+def message_callback(st):
+    global roll_messages
+    for msg in roll_messages:
+        print('msg', msg)
+
+updater.dispatcher.add_handler(
+    MessageHandler(filters=Filters.all,
+                   callback=message))
 
 jobs = JobQueue()
 jobs.set_dispatcher(updater.dispatcher)
 jobs.run_repeating(callback=job_callback, interval=10)
+jobs.run_repeating(callback=message_callback, interval=1)
 jobs.start()
 
 updater.start_polling()
