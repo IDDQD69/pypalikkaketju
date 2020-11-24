@@ -1,0 +1,9 @@
+
+
+export FLASK_APP=app
+export SPC_NODE=''
+export SPC_PREFIX='
+
+flask run\
+    --cert=./certs/server.crt\
+    --key=./certs/server.key

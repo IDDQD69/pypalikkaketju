@@ -164,15 +164,14 @@ def get_roll_message(update, dice, bet, new_balance):
         'timestamp': arrow.get().shift(seconds=3).datetime,
         'update': update,
         'win_value': win_value,
-        'rolls_left': rolls_left
+        'new_balance': new_balance
     }
 
 def get_help_text():
     return (
         'komennot: \n'
         '!osoite -- listaa osoitteet \n'
-        '!osoite <julkinen osoite> -- lisää oma osoitteesi listaan \n'
-        '\n'
+        '!osoite <julkinen osoite> -- lisää oma osoitteesi listaan \n\n'
         'Slots! \n'
         'Lisää osoitteesi komennolla !osoite <julkinen osoite> \n'
         'Lähetä SPC osoitteeseen: \n'

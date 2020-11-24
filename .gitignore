@@ -4,3 +4,8 @@ venv
 logs
 *.db
 runbot.sh
+.idea
+run_*
+
+certs/**
+!certs/readme.md
