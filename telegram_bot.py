@@ -3,6 +3,7 @@ import datetime
 import requests
 import json
 import arrow
+import re
 
 from os import environ
 
@@ -77,9 +78,12 @@ class SPCTelegramBot:
         self.secret_key, self.public_key = self._get_keys(self.spc_wallet)
         self.updater = Updater(self.token, use_context=True)
 
-        msg_handler = MessageHandler(filters=Filters.all,
+        msg_handler = MessageHandler(filters=Filters.text,
                                      callback=self.message_callback)
+        dice_handler = MessageHandler(filters=Filters.dice,
+                                      callback=self.dice_callback)
         self.updater.dispatcher.add_handler(msg_handler)
+        self.updater.dispatcher.add_handler(dice_handler)
 
         jobs = JobQueue()
         jobs.set_dispatcher(self.updater.dispatcher)
@@ -185,17 +189,17 @@ class SPCTelegramBot:
             '!roll bet <summa> -- aseta haluamasi panos'
         )
 
+    def dice_callback(self, update, context):
+        self.handle_dice(update)
+
     def message_callback(self, update, context):
-        if update.message.text:
-            args = update.message.text.split(' ')
-            if args[0] == '!help':
-                update.message.reply_text(self.get_help_text())
-            elif args[0] == '!osoite':
-                self.cmd_address(update)
-            elif args[0] == '!roll':
-                self.cmd_roll(update)
-        if update.message.dice:
-            self.handle_dice(update)
+        args = update.message.text.lower().split(' ')
+        if args[0] == '!help':
+            update.message.reply_text(self.get_help_text())
+        elif args[0] == '!osoite':
+            self.cmd_address(update)
+        elif args[0] == '!roll':
+            self.cmd_roll(update)
 
     def handle_dice(self, update):
         user_id = update.effective_user.id
