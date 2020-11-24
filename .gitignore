@@ -3,6 +3,7 @@
 venv
 logs
 *.db
+**/*.db
 runbot.sh
 .idea
 run_*

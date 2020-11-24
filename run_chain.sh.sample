@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+export FLASK_APP=node_server.py
+export SPC_MASTER_PK=''

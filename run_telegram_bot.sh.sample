@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+export tbot_api=''
+export spc_url=''
+export spc_wallet=''
+
+python telegram_bot.py

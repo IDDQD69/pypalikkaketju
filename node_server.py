@@ -320,6 +320,7 @@ def _update_balances(balances, from_address,
     balances[from_address] = balances.get(from_address, 0) - amount
     balances[to_address] = balances.get(to_address, 0) + amount
 
+
 @app.route('/transactions/', methods=['GET'])
 @app.route('/transactions/<address>', methods=['GET'])
 def get_transactions(address=None):
