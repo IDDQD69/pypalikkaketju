@@ -5,5 +5,5 @@ export SPC_NODE=''
 export SPC_PREFIX='
 
 flask run\
-    --cert=./certs/server.crt\
-    --key=./certs/server.key
+    --cert=./certs/cert.pem\
+    --key=./certs/key.pem
