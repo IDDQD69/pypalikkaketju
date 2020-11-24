@@ -1,18 +1,15 @@
 import datetime
 import json
-import io
-import tempfile
 
 from io import BytesIO
 from os import getenv
-import sqlite3
 
 import pagan
 
 import requests
 
 from jinja2 import Markup
-from flask import render_template, redirect, request
+from flask import render_template, request
 from flask import jsonify
 from flask import send_file
 
