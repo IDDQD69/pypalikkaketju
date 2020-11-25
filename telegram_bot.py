@@ -160,7 +160,7 @@ class SPCTelegramBot:
     @staticmethod
     def get_roll_message(update, dice, bet, new_balance, win_value):
         return {
-            'timestamp': arrow.get().shift(seconds=3).datetime,
+            'timestamp': arrow.get().shift(seconds=2).datetime,
             'update': update,
             'win_value': win_value,
             'new_balance': new_balance
@@ -265,7 +265,6 @@ class SPCTelegramBot:
 
             tx_timestamp = arrow.get(tx['timestamp']).datetime
             if arrow.get(timestamp).datetime < tx_timestamp:
-                print('handling transaction', tx)
                 self._update_timestamp(address.address, tx_timestamp)
                 amount = tx['amount']
                 roll = self._get_roll(address.user_id)
@@ -285,8 +284,6 @@ class SPCTelegramBot:
                 update.message.reply_text(f'-- VOITTO {msg["win_value"]} SPC --')
             else:
                 update.message.reply_text('-- EI VOITTOA --')
-
-            print('msg', msg)
         self.roll_messages = new_messages
 
 
