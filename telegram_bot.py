@@ -209,9 +209,9 @@ class SPCTelegramBot:
                 # 64 777
                 win_value = 0
                 if dice.value in [43, 22, 1]:
-                    win_value = roll.bet * 5
+                    win_value = roll.bet * 25
                 elif dice.value == 64:
-                    win_value = roll.bet * 10
+                    win_value = roll.bet * 75
 
                 new_balance = roll.balance - roll.bet + win_value
                 roll.balance = new_balance
@@ -221,8 +221,9 @@ class SPCTelegramBot:
                                                 roll.bet, new_balance,
                                                 win_value)
                 self.roll_messages.append(message)
-            else:
-                update.message.reply_text('Ei tarpeeksi pelimerkkejä.')
+
+                if new_balance <= 0:
+                    update.message.reply_text('Ei enää pelimerkkejä.')
 
     def _get_transactions(self):
         get_chain_address = f"{self.spc_url}/transactions/{self.public_key}"
@@ -281,9 +282,8 @@ class SPCTelegramBot:
 
             update = msg['update']
             if msg['win_value'] > 0:
-                update.message.reply_text(f'-- VOITTO {msg["win_value"]} SPC --')
-            else:
-                update.message.reply_text('-- EI VOITTOA --')
+                message_string = f'-- VOITTO {msg["win_value"]} SPC --'
+                update.message.reply_text(message_string)
         self.roll_messages = new_messages
 
 
