@@ -140,6 +140,9 @@ class SPCTelegramBot:
                            address=arguments[1])
             update.message.reply_text('Osoite lisätty!')
 
+    def cmd_roll_stats(self, update: Update) -> None:
+        arguments = update.message.text.split(' ')
+
     def cmd_roll(self, update: Update) -> None:
         arguments = update.message.text.split(' ')
         user_id = update.effective_user.id
@@ -147,8 +150,10 @@ class SPCTelegramBot:
             roll = self._get_roll(user_id)
             if (len(arguments) > 2 and
                 arguments[1] == 'bet'):
-
-                roll.bet = int(arguments[2])
+                bet = int(arguments[2])
+                if bet > 100:
+                    bet = 100
+                roll.bet = bet
                 roll.save()
             address = Address.get(Address.user_id==user_id)
             return_message = (
@@ -183,7 +188,7 @@ class SPCTelegramBot:
             'https://ajnieminen.kapsi.fi/spc/wallet\n\n'
             'Varat ilmestyvät pelitilillesi muutamassa minuutissa. \n\n'
             '!roll -- näet tilisi tiedot.\n'
-            '!roll bet <summa> -- aseta haluamasi panos'
+            '!roll bet <summa> -- aseta haluamasi panos (max bet 100)'
         )
 
     def dice_callback(self, update, context):
@@ -197,7 +202,10 @@ class SPCTelegramBot:
         elif args[0] == '!osoite':
             self.cmd_address(update)
         elif args[0] == '!roll':
-            self.cmd_roll(update)
+            if len(args) > 1 and args[1] == 'stats':
+                self.cmd_roll_stats(update)
+            else:
+                self.cmd_roll(update)
 
     def handle_dice(self, update):
 
@@ -212,9 +220,6 @@ class SPCTelegramBot:
         dice_bet = roll.bet
         win_value = 0
 
-        for d in Dice.select():
-            print('d', d)
-
         if '🎰' == dice.emoji and roll.bet > 0:
             if roll.balance >= roll.bet:
                 # 43 lemonparty
@@ -222,9 +227,9 @@ class SPCTelegramBot:
                 # 1 bar
                 # 64 777
                 if dice.value in [43, 22, 1]:
-                    win_value = roll.bet * 25
+                    win_value = roll.bet * 15
                 elif dice.value == 64:
-                    win_value = roll.bet * 75
+                    win_value = roll.bet * 60
 
                 new_balance = roll.balance - roll.bet + win_value
                 roll.balance = new_balance
