@@ -28,11 +28,15 @@ class Dice(Model):
     user_id = IntegerField()
     emoji = CharField()
     value = IntegerField()
+    bet = IntegerField()
+    win = IntegerField()
     datetime = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
         database = db
 
+    def __str__(self):
+        return f'{self.emoji} {self.bet} {self.win}'
 
 class Roll(Model):
     user_id = IntegerField(primary_key=True)
@@ -167,6 +171,7 @@ class SPCTelegramBot:
         }
 
     def get_help_text(self):
+
         return (
             'komennot: \n'
             '!osoite -- listaa osoitteet \n'
@@ -175,8 +180,9 @@ class SPCTelegramBot:
             'Lisää osoitteesi komennolla !osoite <julkinen osoite> \n'
             'Lähetä SPC osoitteeseen: \n'
             f'{self.public_key} \n\n'
+            'https://ajnieminen.kapsi.fi/spc/wallet\n\n'
             'Varat ilmestyvät pelitilillesi muutamassa minuutissa. \n\n'
-            '!roll -- näet tilisi tiedot.'
+            '!roll -- näet tilisi tiedot.\n'
             '!roll bet <summa> -- aseta haluamasi panos'
         )
 
@@ -194,12 +200,20 @@ class SPCTelegramBot:
             self.cmd_roll(update)
 
     def handle_dice(self, update):
+
+        if update.message.forward_from is not None:
+            return
+
         logger.info(f'handle_dice: {update}')
         user_id = update.effective_user.id
         dice = update.message.dice
         roll = self._get_roll(user_id)
 
-        Dice.create(user_id=user_id, emoji=dice.emoji, value=dice.value)
+        dice_bet = roll.bet
+        win_value = 0
+
+        for d in Dice.select():
+            print('d', d)
 
         if '🎰' == dice.emoji and roll.bet > 0:
             if roll.balance >= roll.bet:
@@ -207,7 +221,6 @@ class SPCTelegramBot:
                 # 22 rypaleet
                 # 1 bar
                 # 64 777
-                win_value = 0
                 if dice.value in [43, 22, 1]:
                     win_value = roll.bet * 25
                 elif dice.value == 64:
@@ -224,6 +237,9 @@ class SPCTelegramBot:
 
                 if new_balance <= 0:
                     update.message.reply_text('Ei enää pelimerkkejä.')
+
+        Dice.create(user_id=user_id, emoji=dice.emoji, value=dice.value,
+                    bet=dice_bet, win=win_value)
 
     def _get_transactions(self):
         get_chain_address = f"{self.spc_url}/transactions/{self.public_key}"
