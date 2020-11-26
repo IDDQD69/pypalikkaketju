@@ -82,9 +82,11 @@ class SPCTelegramBot:
         self.secret_key, self.public_key = self._get_keys(self.spc_wallet)
         self.updater = Updater(self.token, use_context=True)
 
-        msg_handler = MessageHandler(filters=Filters.text,
+        filter = Filters.text & (~Filters.forwarded) & (~Filters.update.edited_message)
+
+        msg_handler = MessageHandler(filters=filter,
                                      callback=self.message_callback)
-        dice_handler = MessageHandler(filters=Filters.dice,
+        dice_handler = MessageHandler(filters=filter,
                                       callback=self.dice_callback)
         self.updater.dispatcher.add_handler(msg_handler)
         self.updater.dispatcher.add_handler(dice_handler)
@@ -148,11 +150,12 @@ class SPCTelegramBot:
         user_id = update.effective_user.id
         try:
             roll = self._get_roll(user_id)
-            if (len(arguments) > 2 and
-                arguments[1] == 'bet'):
+            if len(arguments) > 2 and arguments[1] == 'bet':
                 bet = int(arguments[2])
                 if bet > 100:
                     bet = 100
+                if bet < 0:
+                    bet = 0
                 roll.bet = bet
                 roll.save()
             address = Address.get(Address.user_id==user_id)
@@ -253,7 +256,7 @@ class SPCTelegramBot:
             data = json.loads(response.content)
             return sorted(data['transactions'],
                           key=lambda k: k['timestamp'],
-                          reverse=True)
+                          reverse=False)
         return []
 
     @staticmethod
@@ -287,6 +290,7 @@ class SPCTelegramBot:
 
             tx_timestamp = arrow.get(tx['timestamp']).datetime
             if arrow.get(timestamp).datetime < tx_timestamp:
+                logger.info(f'handling transaction: {tx}')
                 self._update_timestamp(address.address, tx_timestamp)
                 amount = tx['amount']
                 roll = self._get_roll(address.user_id)
