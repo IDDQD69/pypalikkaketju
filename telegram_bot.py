@@ -20,6 +20,8 @@ from peewee import CharField
 from peewee import DateTimeField
 from peewee import IntegerField
 
+from signing.sign import sign_data
+
 from nacl.bindings.crypto_sign import crypto_sign_ed25519_sk_to_pk
 
 db = SqliteDatabase('database/spc.db')
@@ -183,13 +185,12 @@ class SPCTelegramBot:
                 'from_address': self.secret_key,
                 'amount': w_value
             }
-            data = {
-                'public_key': self.public_key,
-                'message': ''
-            }
-            result = requests.post(widthraw_url, data)
-        except DoesNotExist:
-            pass
+            data_str = sign_data(self.secret_key, message_ojb)
+            print('data', data_str)
+            result = requests.post(widthraw_url, data_str)
+            print('res', result)
+        except Exception as e:
+            print('e', e)
 
     def cmd_roll_stats(self, update: Update) -> None:
         win_lose_dict = {}
