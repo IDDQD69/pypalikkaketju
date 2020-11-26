@@ -1,10 +1,11 @@
-
 import datetime
 import requests
 import json
 import arrow
 import logging
 import os
+
+import numpy as np
 
 from telegram import Update
 from telegram.ext import Updater
@@ -23,6 +24,15 @@ from nacl.bindings.crypto_sign import crypto_sign_ed25519_sk_to_pk
 
 db = SqliteDatabase('database/spc.db')
 
+widthraw_url = 'https://ajnieminen.kapsi.fi/spc/submit'
+
+default_settings = {
+    'win_basic':  10,
+    'win_777':  30,
+    'mp_shape': 1,
+    'mp_scale': 10,
+    'mp_size': 1,
+}
 
 class Dice(Model):
     user_id = IntegerField()
@@ -37,6 +47,7 @@ class Dice(Model):
 
     def __str__(self):
         return f'{self.emoji} {self.bet} {self.win}'
+
 
 class Roll(Model):
     user_id = IntegerField(primary_key=True)
@@ -72,9 +83,12 @@ class SPCTelegramBot:
     def __init__(self, logger):
         self.logger = logger
 
-        self.token = os.environ['tbot_api']
-        self.spc_url = os.environ['spc_url']
-        self.spc_wallet = os.environ['spc_wallet']
+        self.settings = default_settings
+
+        self.token = os.getenv('tbot_api')
+        self.spc_url = os.getenv('spc_url')
+        self.spc_wallet = os.getenv('spc_wallet')
+        self.admin_id = int(os.getenv('spc_admin_id', None))
 
         self._create_tables()
 
@@ -82,8 +96,14 @@ class SPCTelegramBot:
         self.secret_key, self.public_key = self._get_keys(self.spc_wallet)
         self.updater = Updater(self.token, use_context=True)
 
-        msg_filter = Filters.text & (~Filters.forwarded) & (~Filters.update.edited_message)
-        dice_filter = Filters.dice & (~Filters.forwarded) & (~Filters.update.edited_message)
+        msg_filter = Filters.text \
+                     & (~Filters.forwarded) \
+                     & (~Filters.update.edited_message)
+
+        dice_filter = Filters.dice \
+                      & (~Filters.forwarded) \
+                      & (~Filters.update.edited_message) \
+                      & Filters.group
 
         msg_handler = MessageHandler(filters=msg_filter,
                                      callback=self.message_callback)
@@ -122,6 +142,15 @@ class SPCTelegramBot:
                 bet=0,
                 balance=0)
 
+    def cmd_admin(self, update: Update) -> None:
+        if self.admin_id != update.effective_user.id:
+            logger.info(f'user id {update.effective_user.id} is not admin'
+                        f' current admin id is {self.admin_id}')
+        arguments = update.message.text.split(' ')
+        if len(arguments) > 1 and arguments[1] == 'setting':
+            pass
+        update.message.reply_text()
+
     @staticmethod
     def cmd_address(update: Update) -> None:
         arguments = update.message.text.split(' ')
@@ -132,9 +161,9 @@ class SPCTelegramBot:
             update.message.reply_text(text)
         if len(arguments) == 2:
             user = update.effective_user
-            Address.delete()\
-                   .where(Address.user_id==user.id)\
-                   .execute()
+            Address.delete() \
+                .where(Address.user_id == user.id) \
+                .execute()
             username = user.first_name
             if user.last_name:
                 username += f' {user.last_name}'
@@ -143,8 +172,35 @@ class SPCTelegramBot:
                            address=arguments[1])
             update.message.reply_text('Osoite lisätty!')
 
-    def cmd_roll_stats(self, update: Update) -> None:
+    def cmd_widthraw(self, update: Update) -> None:
         arguments = update.message.text.split(' ')
+        try:
+            address = Address.get(Address.user_id == update.effective_user.id)
+            w_value = int(arguments[1])
+            print('www', w_value, self.public_key, self.secret_key)
+            message_ojb = {
+                'to_address': address.address,
+                'from_address': self.secret_key,
+                'amount': w_value
+            }
+            data = {
+                'public_key': self.public_key,
+                'message': ''
+            }
+            result = requests.post(widthraw_url, data)
+        except DoesNotExist:
+            pass
+
+    def cmd_roll_stats(self, update: Update) -> None:
+        win_lose_dict = {}
+
+        d: Dice
+        for d in Dice.select().where(Dice.emoji == '🎰'):
+            user_dict = win_lose_dict.get(d.user_id, {})
+            win_lose_dict[d.user_id] = {
+                'wins': user_dict.get('wins', 0) + d.win,
+                'bets': user_dict.get('bets', 0) + d.bet
+            }
 
     def cmd_roll(self, update: Update) -> None:
         arguments = update.message.text.split(' ')
@@ -159,10 +215,9 @@ class SPCTelegramBot:
                     bet = 0
                 roll.bet = bet
                 roll.save()
-            address = Address.get(Address.user_id==user_id)
             return_message = (
                 '-- Tilisi tiedot -- \n'
-                f'Peliti: {roll.balance} SPC\n'
+                f'Pelitili: {roll.balance} SPC\n'
                 f'Panos: {roll.bet}\n'
             )
             update.message.reply_text(return_message)
@@ -171,16 +226,16 @@ class SPCTelegramBot:
             update.message.reply_text('Osoitetta ei lisätty.')
 
     @staticmethod
-    def get_roll_message(update, dice, bet, new_balance, win_value):
+    def get_roll_message(update, new_balance, win_value, win_mp):
         return {
             'timestamp': arrow.get().shift(seconds=2).datetime,
             'update': update,
             'win_value': win_value,
+            'win_mp': win_mp,
             'new_balance': new_balance
         }
 
     def get_help_text(self):
-
         return (
             'komennot: \n'
             '!osoite -- listaa osoitteet \n'
@@ -193,6 +248,12 @@ class SPCTelegramBot:
             'Varat ilmestyvät pelitilillesi muutamassa minuutissa. \n\n'
             '!roll -- näet tilisi tiedot.\n'
             '!roll bet <summa> -- aseta haluamasi panos (max bet 100)'
+            '\n\n'
+            'Elämä on epäreilua ja niin on slotsitkin.\n'
+            'Sattuma päättää nyt kertoimen.'
+            '\n\n'
+            'Jos olet köyhä ja haluat rahat takas, niin:\n'
+            '!kotiuta <summa>'
         )
 
     def dice_callback(self, update, context):
@@ -203,13 +264,23 @@ class SPCTelegramBot:
         args = update.message.text.lower().split(' ')
         if args[0] == '!help':
             update.message.reply_text(self.get_help_text())
+        elif args[0] == '!admin':
+            self.cmd_admin(update)
         elif args[0] == '!osoite':
             self.cmd_address(update)
+        elif args[0] == '!kotiuta':
+            self.cmd_widthraw(update)
         elif args[0] == '!roll':
             if len(args) > 1 and args[1] == 'stats':
                 self.cmd_roll_stats(update)
             else:
                 self.cmd_roll(update)
+
+    def get_win_multiplier(self):
+        shape = self.settings['mp_shape']
+        scale = self.settings['mp_scale']
+        size = self.settings['mp_size']
+        return int(np.random.gamma(shape, scale, size)) + 1
 
     def handle_dice(self, update):
 
@@ -231,20 +302,26 @@ class SPCTelegramBot:
                 # 1 bar
                 # 64 777
                 if dice.value in [43, 22, 1]:
-                    win_value = roll.bet * 15
+                    win_value = roll.bet * self.settings['win_basic']
                 elif dice.value == 64:
-                    win_value = roll.bet * 60
+                    win_value = roll.bet * self.settings['win_777']
+
+                win_mp = 0
+                if win_value > 0:
+                    win_mp = self.get_win_multiplier()
+                    win_value = int(win_value * win_mp)
 
                 new_balance = roll.balance - roll.bet + win_value
                 roll.balance = new_balance
                 roll.save()
 
-                message = self.get_roll_message(update, dice,
-                                                roll.bet, new_balance,
-                                                win_value)
+                message = self.get_roll_message(update,
+                                                new_balance,
+                                                win_value,
+                                                win_mp)
                 self.roll_messages.append(message)
 
-                if new_balance <= 0:
+                if new_balance - roll.bet <= 0:
                     update.message.reply_text('Ei enää pelimerkkejä.')
 
         Dice.create(user_id=user_id, emoji=dice.emoji, value=dice.value,
@@ -268,9 +345,9 @@ class SPCTelegramBot:
 
     @staticmethod
     def _update_timestamp(address, timestamp):
-        Transaction\
-            .insert(address=address, timestamp=timestamp)\
-            .on_conflict('replace')\
+        Transaction \
+            .insert(address=address, timestamp=timestamp) \
+            .on_conflict('replace') \
             .execute()
 
     def job_callback(self, context):
@@ -308,7 +385,8 @@ class SPCTelegramBot:
 
             update = msg['update']
             if msg['win_value'] > 0:
-                message_string = f'-- VOITTO {msg["win_value"]} SPC --'
+                message_string = f'-- VOITTO {msg["win_value"]} SPC --' \
+                                 f'\nkerroin: {msg["win_mp"]}'
                 update.message.reply_text(message_string)
         self.roll_messages = new_messages
 
