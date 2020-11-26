@@ -82,11 +82,12 @@ class SPCTelegramBot:
         self.secret_key, self.public_key = self._get_keys(self.spc_wallet)
         self.updater = Updater(self.token, use_context=True)
 
-        filter = Filters.text & (~Filters.forwarded) & (~Filters.update.edited_message)
+        msg_filter = Filters.text & (~Filters.forwarded) & (~Filters.update.edited_message)
+        dice_filter = Filters.dice & (~Filters.forwarded) & (~Filters.update.edited_message)
 
-        msg_handler = MessageHandler(filters=filter,
+        msg_handler = MessageHandler(filters=msg_filter,
                                      callback=self.message_callback)
-        dice_handler = MessageHandler(filters=filter,
+        dice_handler = MessageHandler(filters=dice_filter,
                                       callback=self.dice_callback)
         self.updater.dispatcher.add_handler(msg_handler)
         self.updater.dispatcher.add_handler(dice_handler)
