@@ -32,7 +32,7 @@ default_settings = {
     'win_basic':  10,
     'win_777':  15,
     'mp_shape': 1,
-    'mp_scale': 5,
+    'mp_scale': 1,
     'mp_size': 1,
 }
 
