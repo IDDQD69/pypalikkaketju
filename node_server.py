@@ -90,7 +90,6 @@ class Blockchain:
         toc = time.perf_counter()
         app.logger.info(f"restore: {len(self.chain)} blocks in {toc - tic:0.4f}s")
 
-
     def preserve_blockchain(self):
         conn = sqlite3.connect('blockchain.db')
         c = conn.cursor()
@@ -176,7 +175,6 @@ class Blockchain:
 
         return result
 
-
     def get_balance(self, address):
         balance = 0
         tic = time.perf_counter()
@@ -250,6 +248,7 @@ class Blockchain:
 
         return True
 
+
 def setup_logger():
     log_level = logging.INFO
     for handler in app.logger.handlers:
@@ -263,6 +262,7 @@ def setup_logger():
     handler.setLevel(log_level)
     app.logger.addHandler(handler)
     app.logger.setLevel(log_level)
+
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -296,7 +296,7 @@ def new_transaction():
     tx_data = json.loads(tx_data)
     required_fields = ["to_address", "from_address", "amount"]
     for field in required_fields:
-        if not field in tx_data:
+        if field not in tx_data:
             return "Invalid transaction data", 404
 
     tx_data["amount"] = int(tx_data["amount"])
@@ -339,6 +339,8 @@ def get_transactions(address=None):
                 if tx['from_address'] != address\
                    and tx['to_address'] != address:
                     continue
+
+            blockchain.get_balance(tx['from_address'])
 
             if tx['status'] == 1:
                 _update_balances(balances, tx['from_address'],

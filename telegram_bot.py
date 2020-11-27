@@ -31,7 +31,7 @@ widthraw_url = 'https://ajnieminen.kapsi.fi/spc/submit'
 default_settings = {
     'win_basic':  1,
     'win_777':  1,
-    'win_777_mp':  10,
+    'win_777_mp':  2,
     'mp_shape': 1,
     'mp_scale': 3,
     'mp_size': 1,
