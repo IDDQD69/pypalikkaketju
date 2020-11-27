@@ -13,6 +13,8 @@ from flask import render_template, request
 from flask import jsonify
 from flask import send_file
 
+from PIL import Image
+
 from app import app
 
 from signing.verify import verify_data
@@ -39,6 +41,7 @@ def transaction_processor():
     return {'timestamp': timestamp,
             'ts_js': ts_js}
 
+
 def fetch_chain():
     """
     Function to fetch the chain from a blockchain node, parse the
@@ -64,6 +67,7 @@ def fetch_chain():
 def get_directory():
     return jsonify({})
 
+
 @app.route('/directory', methods=['POST'])
 def set_directory():
     data = request.get_json()
@@ -73,9 +77,11 @@ def set_directory():
     bytes.decode(given_public_key)
     return jsonify(data)
 
+
 @app.route('/wallet')
 def wallet():
     return render_template('wallet.html', prefix=PREFIX)
+
 
 @app.route('/account/')
 @app.route('/account/<address>')
@@ -121,6 +127,7 @@ def index():
                            node_address=CONNECTED_NODE_ADDRESS,
                            readable_time=timestamp_to_string)
 
+
 @app.route('/submit', methods=['POST'])
 def submit_textarea():
     """
@@ -135,16 +142,23 @@ def submit_textarea():
     return jsonify({'status_code': result.status_code,
                     'status_text': result.text})
 
+
 def serve_pil_image(pil_img):
     img_io = BytesIO()
     pil_img.save(img_io, 'PNG')
     img_io.seek(0)
     return send_file(img_io, mimetype='image/png')
 
+
+@app.route('/hash_img/')
 @app.route('/hash_img/<value>')
-def get_hash_img(value):
+def get_hash_img(value=None):
+    if value is None or len(value) <= 0:
+        im = Image.open("app/static/stare.png")
+        return serve_pil_image(im)
     p = pagan.Avatar(value, pagan.SHA256)
     return serve_pil_image(p.img)
+
 
 def timestamp_to_string(epoch_time):
     return datetime.datetime.fromtimestamp(epoch_time).strftime('%H:%M')

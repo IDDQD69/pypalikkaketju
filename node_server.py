@@ -11,6 +11,7 @@ import requests
 
 from signing.verify import verify_data
 
+DATABASE_PATH = 'database/blockchain.db'
 
 class Block:
     def __init__(self, index, transactions,
@@ -65,7 +66,7 @@ class Blockchain:
         tic = time.perf_counter()
         generated_blockchain = Blockchain()
         generated_blockchain.create_genesis_block()
-        conn = sqlite3.connect('blockchain.db')
+        conn = sqlite3.connect(DATABASE_PATH)
         c = conn.cursor()
         sql = """
         CREATE TABLE IF NOT EXISTS block (
@@ -74,7 +75,7 @@ class Blockchain:
         );
         """
         c.execute(sql)
-        c.execute('SELECT * FROM block ORDER BY i ASC')
+        c.execute('SELECT * FROM block ORDER BY i ASC;')
         for b in c.fetchall():
             block_data = json.loads(b[1])
             block = Block(block_data["index"],
@@ -83,15 +84,14 @@ class Blockchain:
                           block_data["previous_hash"],
                           block_data["nonce"])
             proof = block_data['hash']
-            added = generated_blockchain.add_block(block, proof)
-            app.logger.info(f'added block {added} {block.index} {block.previous_hash}')
+            generated_blockchain.add_block(block, proof)
         conn.close()
         self.chain = generated_blockchain.chain
         toc = time.perf_counter()
         app.logger.info(f"restore: {len(self.chain)} blocks in {toc - tic:0.4f}s")
 
     def preserve_blockchain(self):
-        conn = sqlite3.connect('blockchain.db')
+        conn = sqlite3.connect(DATABASE_PATH)
         c = conn.cursor()
         c.execute("DELETE FROM block;")
         for block in self.chain:
@@ -180,15 +180,11 @@ class Blockchain:
         tic = time.perf_counter()
         for block in self.chain:
             for tx in block.transactions:
-
-                if tx['from_address'] == '42daa886726d162f0e5953138f53764a70ffe18e9dd2f3b21743fefaa775330f':
-                    app.logger(f'{tx}')
-
                 if tx['status'] != 1:
                     continue
                 if tx['from_address'] == address:
                     balance -= tx['amount']
-                elif tx['to_address'] == address:
+                if tx['to_address'] == address:
                     balance += tx['amount']
         toc = time.perf_counter()
         app.logger.info(f"get_balance: {address} {balance} in {toc - tic:0.4f}s")
@@ -232,6 +228,7 @@ class Blockchain:
         transactions to the blockchain by adding them to the block
         and figuring out Proof Of Work.
         """
+        app.logger.info(f'mine {self.unconfirmed_transactions}')
         if not self.unconfirmed_transactions:
             return False
 
@@ -287,10 +284,11 @@ peers = set()
 def new_transaction():
 
     tx_data = request.get_json()
+    app.logger.info(f'new_transaction: {tx_data}')
     required_fields = ["public_key", "message"]
 
     for field in required_fields:
-        if not field in tx_data:
+        if field not in tx_data:
             return "Invalid transaction data", 404
 
     message = tx_data['message']
@@ -319,8 +317,11 @@ def new_transaction():
 @app.route('/chain', methods=['GET'])
 def get_chain():
     chain_data = []
+    tic = time.perf_counter()
     for block in blockchain.chain:
         chain_data.append(block.__dict__)
+    toc = time.perf_counter()
+    app.logger.info(f"get_chain: return chain in {toc - tic:0.4f}s")
     return json.dumps({"length": len(chain_data),
                        "chain": chain_data,
                        "peers": list(peers)})
@@ -337,6 +338,8 @@ def _update_balances(balances, from_address,
 def get_transactions(address=None):
     balances = {}
     transactions = []
+    tic = time.perf_counter()
+
     for block in blockchain.chain:
         for tx in block.transactions:
             if address:
@@ -350,15 +353,17 @@ def get_transactions(address=None):
                 _update_balances(balances, tx['from_address'],
                                  tx['to_address'], tx['amount'])
                 transactions.append(tx)
+
+    toc = time.perf_counter()
+    app.logger.info(f"get_transactions: return transactions in {toc - tic:0.4f}s")
     return json.dumps({"length": len(transactions),
                        "balances": balances,
                        "transactions": transactions})
 
-# endpoint to request the node to mine the unconfirmed
-# transactions (if any). We'll be using it to initiate
-# a command to mine from our application itself.
+
 @app.route('/mine', methods=['GET'])
 def mine_unconfirmed_transactions():
+    tic = time.perf_counter()
     result = blockchain.mine()
     if not result:
         return "No transactions to mine"
@@ -369,6 +374,8 @@ def mine_unconfirmed_transactions():
         if chain_length == len(blockchain.chain):
             # announce the recently mined block to the network
             announce_new_block(blockchain.last_block)
+        toc = time.perf_counter()
+        app.logger.info(f"mine_unconfirmed_transactions: mined in {toc - tic:0.4f}s")
         return "Block #{} is mined.".format(blockchain.last_block.index)
 
 
@@ -521,13 +528,10 @@ def announce_new_block(block):
             url = f"{peer}add_block"
             headers = {'Content-Type': "application/json"}
             requests.post(url,
-                        data=json.dumps(block.__dict__, sort_keys=True),
-                        headers=headers)
+                          data=json.dumps(block.__dict__, sort_keys=True),
+                          headers=headers)
         except Exception as e:
             error_peers.append(peer)
 
     for ep in error_peers:
         peers.remove(ep)
-
-# Uncomment this line if you want to specify the port number in the code
-# app.run(debug=True, port=8000, host='0.0.0.0')
