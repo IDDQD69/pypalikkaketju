@@ -228,9 +228,11 @@ class Blockchain:
         transactions to the blockchain by adding them to the block
         and figuring out Proof Of Work.
         """
-        app.logger.info(f'mine {self.unconfirmed_transactions}')
+
         if not self.unconfirmed_transactions:
             return False
+
+        app.logger.info(f'mine {self.unconfirmed_transactions}')
 
         last_block = self.last_block
         valid_transactions = self.validate_block_transactions(
