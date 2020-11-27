@@ -29,8 +29,9 @@ db = SqliteDatabase('database/spc.db')
 widthraw_url = 'https://ajnieminen.kapsi.fi/spc/submit'
 
 default_settings = {
-    'win_basic':  10,
-    'win_777':  15,
+    'win_basic':  1,
+    'win_777':  1,
+    'win_777_mp':  10,
     'mp_shape': 1,
     'mp_scale': 3,
     'mp_size': 1,
@@ -281,7 +282,8 @@ class SPCTelegramBot:
         shape = self.settings['mp_shape']
         scale = self.settings['mp_scale']
         size = self.settings['mp_size']
-        return int(np.random.gamma(shape, scale, size)) + 1
+        win_mp = int(np.random.gamma(shape, scale, size) * 10)
+        return win_mp / 10
 
     def handle_dice(self, update):
 
@@ -310,6 +312,8 @@ class SPCTelegramBot:
                 win_mp = 0
                 if win_value > 0:
                     win_mp = self.get_win_multiplier()
+                    if dice.value == 64:
+                        win_value * self.settings['win_777_mp']
                     win_value = int(win_value * win_mp)
 
                 new_balance = roll.balance - roll.bet + win_value
