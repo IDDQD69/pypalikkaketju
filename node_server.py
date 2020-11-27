@@ -180,6 +180,10 @@ class Blockchain:
         tic = time.perf_counter()
         for block in self.chain:
             for tx in block.transactions:
+
+                if tx['from_address'] == '42daa886726d162f0e5953138f53764a70ffe18e9dd2f3b21743fefaa775330f':
+                    app.logger(f'{tx}')
+
                 if tx['status'] != 1:
                     continue
                 if tx['from_address'] == address:
