@@ -35,6 +35,7 @@ default_settings = {
     'mp_shape': 1,
     'mp_scale': 3,
     'mp_size': 1,
+    'max_bet': 1000,
 }
 
 class Dice(Model):
@@ -211,8 +212,8 @@ class SPCTelegramBot:
             roll = self._get_roll(user_id)
             if len(arguments) > 2 and arguments[1] == 'bet':
                 bet = int(arguments[2])
-                if bet > 100:
-                    bet = 100
+                if bet > self.settings['max_bet']:
+                    bet = self.settings['max_bet']
                 if bet < 0:
                     bet = 0
                 roll.bet = bet
@@ -249,7 +250,7 @@ class SPCTelegramBot:
             'https://ajnieminen.kapsi.fi/spc/wallet\n\n'
             'Varat ilmestyvät pelitilillesi muutamassa minuutissa. \n\n'
             '!roll -- näet tilisi tiedot.\n'
-            '!roll bet <summa> -- aseta haluamasi panos (max bet 100)'
+            f'!roll bet <summa> -- aseta haluamasi panos (max bet {self.settings["max_bet"]})'
             '\n\n'
             'Elämä on epäreilua ja niin on slotsitkin.\n'
             'Sattuma päättää nyt kertoimen.'
