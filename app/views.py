@@ -124,7 +124,7 @@ def get_pending_tx(address=None):
     return response.text
 
 
-@app.route(f'/')
+@app.route('/')
 def index():
     fetch_chain()
     return render_template('index.html',
