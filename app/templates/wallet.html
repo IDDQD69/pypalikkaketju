@@ -7,6 +7,7 @@
      style="display: none">
   <button id="button_logout">logout</button>
 </div>
+
 <center>
   <div id="insert_sk"
        style="display: none">
@@ -22,6 +23,8 @@
 
     <div id="account_img"></div>
     <div id="account_address"></div>
+    <div id="account_secret_key"></div>
+    <button id="button_show_secret_key">Show secret key</button>
     <div id="account_balance"></div>
 
     <div id="tx_inputs">
@@ -169,7 +172,7 @@
                   account_img.innerHTML = '<a href="{{ prefix }}/account/' + account + '"><img src="{{ prefix }}/hash_img/' + account + '"></a>'; 
 
                   var account_address = document.getElementById('account_address');
-                  account_address.innerHTML = '' + account + ''; 
+                  account_address.innerHTML = '' + account + '';
 
                   var account_balance = document.getElementById('account_balance');
                   account_balance.innerHTML = '<p>Balance:</p><h2>' + balance + ' SPC</h2>'; 
@@ -178,6 +181,11 @@
                   console.log(error);
               });
           
+      }
+
+      const showSecretKey = (secretKey) => {
+          var account_secret_key = document.getElementById('account_secret_key');
+          account_secret_key.innerHTML = '' + secretKey + '';
       }
 
       const getPendingTx = (account) => {
@@ -247,6 +255,12 @@
           setDisplay('remove_sk');
           setDisplay('make_transaction');
           // setDisplay('directory');
+
+          var button_show_secret_key = document.getElementById('button_show_secret_key');
+          button_show_secret_key.addEventListener('click', () => {
+              showSecretKey(secretKey);
+              setDisplay('button_show_secret_key', 'none');
+          });
 
           var button_logout = document.getElementById('button_logout');
           button_logout.addEventListener('click', () => {
