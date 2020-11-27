@@ -67,12 +67,12 @@ def fetch_chain():
                        reverse=True)
 
 
-@app.route('/directory')
+@app.route(f'{PREFIX}/directory')
 def get_directory():
     return jsonify({})
 
 
-@app.route('/directory', methods=['POST'])
+@app.route(f'{PREFIX}/directory', methods=['POST'])
 def set_directory():
     data = request.get_json()
     public_key = data['public_key']
@@ -82,13 +82,13 @@ def set_directory():
     return jsonify(data)
 
 
-@app.route('/wallet')
+@app.route(f'{PREFIX}/wallet')
 def wallet():
     return render_template('wallet.html', prefix=PREFIX)
 
 
-@app.route('/account/')
-@app.route('/account/<address>')
+@app.route(f'{PREFIX}/account/')
+@app.route(f'{PREFIX}/account/<address>')
 def account(address=None):
     txs = []
     balances = {}
@@ -108,15 +108,15 @@ def account(address=None):
                            transactions=txs)
 
 
-@app.route('/transactions/<address>', methods=['GET'])
+@app.route(f'{PREFIX}/transactions/<address>', methods=['GET'])
 def get_transactions(address):
     get_chain_address = f"{CONNECTED_NODE_ADDRESS}/transactions/{address}"
     response = requests.get(get_chain_address)
     return response.text
 
 
-@app.route('/pending_tx')
-@app.route('/pending_tx/<address>')
+@app.route(f'{PREFIX}/pending_tx')
+@app.route(f'{PREFIX}/pending_tx/<address>')
 def get_pending_tx(address=None):
     address = address if address else ''
     get_chain_address = f"{CONNECTED_NODE_ADDRESS}/pending_tx/{address}"
@@ -124,7 +124,7 @@ def get_pending_tx(address=None):
     return response.text
 
 
-@app.route('/')
+@app.route(f'{PREFIX}/')
 def index():
     fetch_chain()
     return render_template('index.html',
@@ -135,7 +135,7 @@ def index():
                            readable_time=timestamp_to_string)
 
 
-@app.route('/submit', methods=['POST'])
+@app.route(f'{PREFIX}/submit', methods=['POST'])
 def submit_textarea():
     """
     Endpoint to create a new transaction via our application.
@@ -157,8 +157,8 @@ def serve_pil_image(pil_img):
     return send_file(img_io, mimetype='image/png')
 
 
-@app.route('/hash_img/')
-@app.route('/hash_img/<value>')
+@app.route(f'{PREFIX}/hash_img/')
+@app.route(f'{PREFIX}/hash_img/<value>')
 def get_hash_img(value=None):
     if value is None or len(value) <= 0:
         im = Image.open("app/static/stare.png")
