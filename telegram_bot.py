@@ -29,9 +29,9 @@ db = SqliteDatabase('database/spc.db')
 widthraw_url = 'https://ajnieminen.kapsi.fi/spc/submit'
 
 default_settings = {
-    'win_basic':  5,
-    'win_777':  10,
-    'win_777_mp':  10,
+    'win_basic':  2,
+    'win_777':  5,
+    'win_777_mp':  6,
     'mp_shape': 1,
     'mp_scale': 2,
     'mp_size': 1,
@@ -147,13 +147,26 @@ class SPCTelegramBot:
                 balance=0)
 
     def cmd_admin(self, update: Update) -> None:
+        global default_settings
+
         if self.admin_id != update.effective_user.id:
             logger.info(f'user id {update.effective_user.id} is not admin'
                         f' current admin id is {self.admin_id}')
         arguments = update.message.text.split(' ')
-        if len(arguments) > 1 and arguments[1] == 'setting':
+        if len(arguments) > 1 and arguments[1] == 'settings':
+            if len(arguments) == 2:
+                reply_text = 'settings:\n'
+                for setting in default_settings:
+                    reply_text += f'{setting}: {default_settings[setting]}\n'
+                update.message.reply_text(reply_text)
+            if len(arguments) > 3:
+
+                setting = arguments[2]
+                value = int(arguments[3])
+                default_settings[setting] = value
+        if len(arguments) > 2 and arguments[1] == 'roll':
+            roll_count = int(arguments[2])
             pass
-        update.message.reply_text()
 
     @staticmethod
     def cmd_address(update: Update) -> None:
