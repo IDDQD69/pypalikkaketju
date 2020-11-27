@@ -13,6 +13,7 @@ from signing.verify import verify_data
 
 DATABASE_PATH = 'database/blockchain.db'
 
+
 class Block:
     def __init__(self, index, transactions,
                  timestamp, previous_hash,
