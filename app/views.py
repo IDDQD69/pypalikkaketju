@@ -21,13 +21,15 @@ from signing.verify import verify_data
 
 # The node with which our application interacts, there can be multiple
 # such nodes as well.
-CONNECTED_NODE_ADDRESS = getenv('SPC_NODE') # "http://localhost:8000"
-PREFIX = getenv('SPC_PREFIX', '') # '/spc'
+CONNECTED_NODE_ADDRESS = getenv('SPC_NODE')
+PREFIX = getenv('SPC_APPLICATION_ROOT', '')
 
 transactions = []
 
+
 @app.context_processor
 def transaction_processor():
+
     def ts_js(tx):
         return Markup(f'''
         <script>
@@ -36,8 +38,10 @@ def transaction_processor():
             moment("{tx["timestamp"]}").format('LT')
           );
         </script>''')
+
     def timestamp(tx):
         return f'{tx["timestamp"]}'
+
     return {'timestamp': timestamp,
             'ts_js': ts_js}
 
@@ -86,7 +90,7 @@ def wallet():
 @app.route('/account/')
 @app.route('/account/<address>')
 def account(address=None):
-    transactions = []
+    txs = []
     balances = {}
     address = address if address else ''
     get_chain_address = f"{CONNECTED_NODE_ADDRESS}/transactions/{address}"
@@ -94,20 +98,22 @@ def account(address=None):
     if response.status_code == 200:
         data = json.loads(response.content)
         balances = data['balances']
-        transactions = sorted(data['transactions'],
+        txs = sorted(data['transactions'],
                               key=lambda k: k['timestamp'],
                               reverse=True)
     return render_template('account.html',
                            prefix=PREFIX,
                            address=address,
                            balances=balances,
-                           transactions=transactions)
+                           transactions=txs)
+
 
 @app.route('/transactions/<address>', methods=['GET'])
 def get_transactions(address):
     get_chain_address = f"{CONNECTED_NODE_ADDRESS}/transactions/{address}"
     response = requests.get(get_chain_address)
     return response.text
+
 
 @app.route('/pending_tx')
 @app.route('/pending_tx/<address>')
@@ -116,6 +122,7 @@ def get_pending_tx(address=None):
     get_chain_address = f"{CONNECTED_NODE_ADDRESS}/pending_tx/{address}"
     response = requests.get(get_chain_address)
     return response.text
+
 
 @app.route(f'/')
 def index():
