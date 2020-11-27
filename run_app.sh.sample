@@ -2,7 +2,7 @@
 
 export FLASK_APP=app
 export SPC_NODE=''
-export SPC_PREFIX='
+export SPC_PREFIX=''
 
 flask run\
     --cert=./certs/cert.pem\
