@@ -9,6 +9,4 @@ application_root = getenv('SPC_APPLICATION_ROOT', '')
 app.run(debug=debug,
         host=hostname,
         port=port)
-
-if application_root and len(application_root):
-    app.config["APPLICATION_ROOT"] = application_root
+app.config["APPLICATION_ROOT"] = application_root
