@@ -200,6 +200,13 @@ class Blockchain:
 
             from_address = tx['from_address']
             to_address = tx['to_address']
+
+            if len(from_address) != 64\
+                or len(to_address) != 64\
+                or from_address == to_address:
+
+                continue
+
             amount = tx['amount']
 
             from_balance = self.get_balance(from_address)

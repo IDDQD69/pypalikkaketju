@@ -284,7 +284,7 @@ class SPCTelegramBot:
         scale = self.settings['mp_scale']
         size = self.settings['mp_size']
         win_mp = int(np.random.gamma(shape, scale, size) * 10)
-        return win_mp / 10
+        return (win_mp / 10) + 1
 
     def handle_dice(self, update):
 
