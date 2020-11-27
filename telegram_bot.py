@@ -26,7 +26,7 @@ from nacl.bindings.crypto_sign import crypto_sign_ed25519_sk_to_pk
 
 db = SqliteDatabase('database/spc.db')
 
-widthraw_url = 'https://ajnieminen.kapsi.fi/spc/submit'
+widthraw_url = os.getenv('spc_widthraw_url', '')
 
 default_settings = {
     'win_basic':  2,
@@ -191,6 +191,10 @@ class SPCTelegramBot:
 
     def cmd_widthraw(self, update: Update) -> None:
         arguments = update.message.text.split(' ')
+
+        if not widthraw_url or len(widthraw_url) < 1:
+            pass
+
         try:
             address = Address.get(Address.user_id == update.effective_user.id)
             w_value = int(arguments[1])
@@ -406,8 +410,8 @@ class SPCTelegramBot:
 
             update = msg['update']
             if msg['win_value'] > 0:
-                message_string = f'-- VOITTO {msg["win_value"]} SPC --' \
-                                 f'\nkerroin: {msg["win_mp"]}'
+                message_string = f'-- VOITTO {msg["win_value"]} SPC --\n' \
+                                 f'kerroin: {msg["win_mp"]}'
                 update.message.reply_text(message_string)
         self.roll_messages = new_messages
 
