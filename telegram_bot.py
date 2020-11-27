@@ -314,7 +314,9 @@ class SPCTelegramBot:
                 if win_value > 0:
                     win_mp = self.get_win_multiplier()
                     if dice.value == 64:
-                        win_value * self.settings['win_777_mp']
+                        win_mp *= self.settings['win_777_mp']
+                        if win_mp < self.settings['win_777_mp']:
+                            win_mp = self.settings['win_777_mp']
                     win_value = int(win_value * win_mp)
 
                 new_balance = roll.balance - roll.bet + win_value
