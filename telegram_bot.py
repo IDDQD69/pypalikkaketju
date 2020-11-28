@@ -29,9 +29,8 @@ db = SqliteDatabase('database/spc.db')
 widthraw_url = os.getenv('spc_widthraw_url', '')
 
 default_settings = {
-    'win_basic':  2,
-    'win_777':  5,
-    'win_777_mp':  6,
+    'win_basic':  1,
+    'win_777':  10,
     'mp_shape': 1,
     'mp_scale': 2,
     'mp_size': 1,
@@ -152,6 +151,7 @@ class SPCTelegramBot:
         if self.admin_id != update.effective_user.id:
             logger.info(f'user id {update.effective_user.id} is not admin'
                         f' current admin id is {self.admin_id}')
+            return
         arguments = update.message.text.split(' ')
         if len(arguments) > 1 and arguments[1] == 'settings':
             if len(arguments) == 2:
@@ -300,8 +300,8 @@ class SPCTelegramBot:
         shape = self.settings['mp_shape']
         scale = self.settings['mp_scale']
         size = self.settings['mp_size']
-        win_mp = int(np.random.gamma(shape, scale, size) * 10)
-        return (win_mp / 10) + 1
+        win_mp = float(np.random.gamma(shape, scale, size))
+        return round(win_mp, 1) + 1
 
     def handle_dice(self, update):
 
@@ -322,19 +322,18 @@ class SPCTelegramBot:
                 # 22 rypaleet
                 # 1 bar
                 # 64 777
-                if dice.value in [43, 22, 1]:
-                    win_value = roll.bet * self.settings['win_basic']
-                elif dice.value == 64:
-                    win_value = roll.bet * self.settings['win_777']
 
+                win_value = 0
                 win_mp = 0
-                if win_value > 0:
+                if dice.value in [43, 22, 1]:
                     win_mp = self.get_win_multiplier()
-                    if dice.value == 64:
-                        win_mp *= self.settings['win_777_mp']
-                        if win_mp < self.settings['win_777_mp']:
-                            win_mp = self.settings['win_777_mp']
-                    win_value = int(win_value * win_mp)
+                    win_mp = win_mp * self.settings['win_basic']
+                elif dice.value == 64:
+                    win_mp = self.get_win_multiplier()
+                    win_mp = win_mp * self.settings['win_777']
+
+                if win_mp > 0:
+                    win_value = round(roll.bet * win_mp, 0)
 
                 new_balance = roll.balance - roll.bet + win_value
                 roll.balance = new_balance
