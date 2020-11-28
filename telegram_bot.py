@@ -26,7 +26,13 @@ from nacl.bindings.crypto_sign import crypto_sign_ed25519_sk_to_pk
 
 db = SqliteDatabase('database/spc.db')
 
+# 43 lemonparty
+# 22 rypaleet
+# 1 bar
+# 64 777
+
 widthraw_url = os.getenv('spc_widthraw_url', '')
+
 
 default_settings = {
     'win_basic':  1,
@@ -36,6 +42,7 @@ default_settings = {
     'mp_size': 1,
     'max_bet': 1000,
 }
+
 
 class Dice(Model):
     user_id = IntegerField()
@@ -214,13 +221,33 @@ class SPCTelegramBot:
     def cmd_roll_stats(self, update: Update) -> None:
         win_lose_dict = {}
 
+        # 43 lemonparty
+        # 22 rypaleet
+        # 1 bar
+        # 64 777
+
+        counter = 0
+        counts = {}
+
         d: Dice
         for d in Dice.select().where(Dice.emoji == '🎰'):
             user_dict = win_lose_dict.get(d.user_id, {})
+
             win_lose_dict[d.user_id] = {
                 'wins': user_dict.get('wins', 0) + d.win,
                 'bets': user_dict.get('bets', 0) + d.bet
             }
+
+            if d.value in [1, 22, 43, 64]:
+                counts[d.value] = counts.get(d.value, 0) + 1
+
+            counter = counter + 1
+
+        for v, c in counts.items():
+            print('c', v, c, c / counter)
+
+        print('counter', counter)
+        print('counts', counts)
 
     def cmd_roll(self, update: Update) -> None:
         arguments = update.message.text.split(' ')
@@ -318,11 +345,6 @@ class SPCTelegramBot:
 
         if '🎰' == dice.emoji and roll.bet > 0:
             if roll.balance >= roll.bet:
-                # 43 lemonparty
-                # 22 rypaleet
-                # 1 bar
-                # 64 777
-
                 win_value = 0
                 win_mp = 0
                 if dice.value in [43, 22, 1]:
