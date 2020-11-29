@@ -406,7 +406,7 @@ class SPCTelegramBot:
             if roll.balance >= roll.bet:
                 win_value = 0
                 win_mp = 0
-                if dice.value in [43, 22, 1]:
+                if dice.value in [43, 22, 1, 64]:
                     win_mp = self.get_win_multiplier()
                     win_mp = win_mp * self.settings['win_basic']
 
