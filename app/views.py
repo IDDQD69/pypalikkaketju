@@ -99,8 +99,8 @@ def account(address=None):
         data = json.loads(response.content)
         balances = data['balances']
         txs = sorted(data['transactions'],
-                              key=lambda k: k['timestamp'],
-                              reverse=True)
+                     key=lambda k: k['timestamp'],
+                     reverse=True)
     return render_template('account.html',
                            prefix=PREFIX,
                            address=address,

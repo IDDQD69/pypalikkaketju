@@ -1,3 +1,4 @@
+import binascii
 import datetime
 import requests
 import json
@@ -21,8 +22,9 @@ from peewee import DateTimeField
 from peewee import IntegerField
 
 from signing.sign import sign_data
+from signing.verify import verify_data
 
-from nacl.bindings.crypto_sign import crypto_sign_ed25519_sk_to_pk
+from nacl.bindings.crypto_sign import crypto_sign_ed25519_sk_to_pk, crypto_sign_open, crypto_sign_keypair
 
 db = SqliteDatabase('database/spc.db')
 
@@ -56,7 +58,9 @@ class Dice(Model):
         database = db
 
     def __str__(self):
-        return f'{self.emoji} {self.bet} {self.win}'
+        return f'{self.user_id} {self.emoji} ' \
+               f'{self.value} {self.bet} ' \
+               f'{self.win} {self.datetime}'
 
 
 class Roll(Model):
@@ -67,6 +71,9 @@ class Roll(Model):
     class Meta:
         database = db
 
+    def __str__(self):
+        return f'{self.user_id} {self.bet} {self.balance}'
+
 
 class Transaction(Model):
     address = CharField(primary_key=True)
@@ -74,6 +81,9 @@ class Transaction(Model):
 
     class Meta:
         database = db
+
+    def __str__(self):
+        return f'{self.address} {self.timestamp}'
 
 
 class Address(Model):
@@ -200,23 +210,68 @@ class SPCTelegramBot:
         arguments = update.message.text.split(' ')
 
         if not widthraw_url or len(widthraw_url) < 1:
-            pass
+            update.message.reply_text('Kotiuttaminen ei käytössä.')
+            return
+
+        if len(arguments) == 1:
+            update.message.reply_text('!kotiuta <summa>')
+            return
 
         try:
+            logger.info(f'cmd_widthraw: {update}')
+            logger.info(f'cmd_widthraw: arguments {arguments}')
             address = Address.get(Address.user_id == update.effective_user.id)
+            logger.info(f'cmd_widthraw: address {address}')
+            roll = Roll.get(Roll.user_id == update.effective_user.id)
+            logger.info(f'cmd_widthraw: roll {roll}')
             w_value = int(arguments[1])
-            print('www', w_value, self.public_key, self.secret_key)
-            message_ojb = {
+            logger.info(f'cmd_widthraw: w_value {w_value}')
+
+            if roll.balance < w_value:
+                update.message.reply_text('Ei katetta.')
+                return
+
+            try:
+
+                pk, spk = crypto_sign_keypair()
+                print('pk 1', pk)
+                print('pk 1', pk.hex())
+                print('pk 1', binascii.unhexlify(pk.hex()))
+
+                signed_data = sign_data(secret_key=self.secret_key, data=data_str)
+                print('signed_data', signed_data.hex())
+                # verified_data = verify_data(signed_data.hex(), self.public_key)
+                verified_data = crypto_sign_open(signed_data, bytes(self.public_key, 'utf-8'))
+                print('verified_data', verified_data)
+            except Exception as e:
+                print('eas', e)
+
+            data_str = sign_data(self.secret_key, {
                 'to_address': address.address,
-                'from_address': self.secret_key,
+                'from_address': self.public_key,
                 'amount': w_value
+            })
+
+            logger.info(f'cmd_widthraw: data_str {data_str}')
+            logger.info(f'cmd_widthraw: widthraw_url {widthraw_url}')
+
+            data = {
+                'public_key': self.public_key,
+                'message': data_str.hex()
             }
-            data_str = sign_data(self.secret_key, message_ojb)
-            print('data', data_str)
-            result = requests.post(widthraw_url, data_str)
+
+            result = requests.post(
+                widthraw_url,
+                json=data,
+                headers={'Content-type': 'application/json'})
+
             print('res', result)
+        except DoesNotExist:
+            update.message.reply_text('Tarkista osoite.')
+        except ValueError as e:
+            update.message.reply_text('Virheellinen summa.')
         except Exception as e:
-            print('e', e)
+            logger.info(f'cmd_widthraw: error {e}')
 
     def cmd_roll_stats(self, update: Update) -> None:
         win_lose_dict = {}

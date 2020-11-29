@@ -178,7 +178,6 @@ class Blockchain:
 
     def get_balance(self, address):
         balance = 0
-        tic = time.perf_counter()
         for block in self.chain:
             for tx in block.transactions:
                 if tx['status'] != 1:
@@ -187,8 +186,6 @@ class Blockchain:
                     balance -= tx['amount']
                 if tx['to_address'] == address:
                     balance += tx['amount']
-        toc = time.perf_counter()
-        app.logger.info(f"get_balance: {address} {balance} in {toc - tic:0.4f}s")
         return balance
     
     def validate_block_transactions(self, transactions):
@@ -287,6 +284,9 @@ peers = set()
 def new_transaction():
 
     tx_data = request.get_json()
+    if not tx_data:
+        return "Invalid transaction data", 404
+
     app.logger.info(f'new_transaction: {tx_data}')
     required_fields = ["public_key", "message"]
 
@@ -296,9 +296,15 @@ def new_transaction():
 
     message = tx_data['message']
     public_key = tx_data['public_key']
-    tx_data = verify_data(data_hex=message,
-                          key_hex=public_key)
-    tx_data = json.loads(tx_data)
+
+    try:
+        tx_data = verify_data(data_hex=message,
+                              key_hex=public_key)
+        tx_data = json.loads(tx_data)
+    except Exception as e:
+        print('e', e)
+        return "Cannot verify", 404
+
     required_fields = ["to_address", "from_address", "amount"]
     for field in required_fields:
         if field not in tx_data:

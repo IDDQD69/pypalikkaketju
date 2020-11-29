@@ -148,10 +148,15 @@
                         'amount': amount }
           const obj_str = JSON.stringify(obj);
           const secret = nacl.sign(nacl.util.decodeUTF8(obj_str), kp.secretKey);
+          const secretHex = toHexString(secret);
+
+          console.log('obj_str', obj_str);
+          console.log('secret', secret);
+          console.log('secretHex', secretHex);
 
           axios.post('{{ prefix }}/submit', {
               public_key: public_key,
-              message: toHexString(secret)
+              message: secretHex
           }).then(function (response) {
               console.log(response);
               window.location.reload(false);
