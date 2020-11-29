@@ -40,7 +40,7 @@ default_settings = {
     'win_basic':  1,
     'win_777':  10,
     'mp_shape': 1,
-    'mp_scale': 2,
+    'mp_scale': 1,
     'mp_size': 1,
     'max_bet': 1000,
     'mp_10': 0.1,
