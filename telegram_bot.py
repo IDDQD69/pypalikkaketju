@@ -47,7 +47,7 @@ default_settings = {
     'mp_50': 0.5,
     'mp_100': 0.04,
     'mp_1000': 0.0001,
-    'slot_delay': 5
+    'slot_delay': 0
 }
 
 
@@ -118,6 +118,7 @@ class SPCTelegramBot:
         self._create_tables()
 
         self.delays = {}
+        self.roll_doubling = {}
         self.roll_messages = []
         self.secret_key, self.public_key = self._get_keys(self.spc_wallet)
         self.bot = Bot(self.token)
@@ -403,6 +404,7 @@ class SPCTelegramBot:
         win_value = 0
 
         if '🎰' == dice.emoji and roll.bet > 0:
+            self.roll_doubling[user_id] = False
             if roll.balance >= roll.bet:
                 win_value = 0
                 win_mp = 0
@@ -421,6 +423,7 @@ class SPCTelegramBot:
                         win_mp *= 10
 
                 if win_mp > 0:
+                    self.roll_doubling[user_id] = True
                     win_value = round(roll.bet * win_mp, 0)
 
                 new_balance = roll.balance - roll.bet + win_value
@@ -435,6 +438,21 @@ class SPCTelegramBot:
 
                 if new_balance - roll.bet <= 0:
                     update.message.reply_text('Ei enää pelimerkkejä.')
+
+        elif dice.emoji == '🏀':#  and self.roll_doubling.get(user_id, False):
+            print('dice.value', dice.value)
+            try:
+                dt = arrow.now().shift(minutes=-5).datetime
+                d = Dice.select()\
+                    .where(Dice.emoji == "🎰",
+                           Dice.user_id == user_id,
+                           Dice.datetime >= dt)\
+                    .order_by(Dice.datetime)\
+                    .limit(1)
+                print('d', d)
+            except DoesNotExist:
+                return
+            pass
 
         Dice.create(user_id=user_id, emoji=dice.emoji, value=dice.value,
                     bet=dice_bet, win=win_value)
