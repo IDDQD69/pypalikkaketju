@@ -8,6 +8,7 @@ import os
 
 import numpy as np
 
+from telegram import Bot
 from telegram import Update
 from telegram.ext import Updater
 from telegram.ext import MessageHandler
@@ -45,7 +46,8 @@ default_settings = {
     'mp_10': 0.8,
     'mp_50': 0.5,
     'mp_100': 0.04,
-    'mp_1000': 0.0001
+    'mp_1000': 0.0001,
+    'slot_delay': 5
 }
 
 
@@ -115,8 +117,10 @@ class SPCTelegramBot:
 
         self._create_tables()
 
+        self.delays = {}
         self.roll_messages = []
         self.secret_key, self.public_key = self._get_keys(self.spc_wallet)
+        self.bot = Bot(self.token)
         self.updater = Updater(self.token, use_context=True)
 
         msg_filter = Filters.text \
@@ -294,6 +298,7 @@ class SPCTelegramBot:
     def cmd_roll(self, update: Update) -> None:
         arguments = update.message.text.split(' ')
         user_id = update.effective_user.id
+
         try:
             roll = self._get_roll(user_id)
             if len(arguments) > 2 and arguments[1] == 'bet':
@@ -342,7 +347,9 @@ class SPCTelegramBot:
             'Sattuma päättää nyt kertoimen.'
             '\n\n'
             'Jos olet köyhä ja haluat rahat takas, niin:\n'
-            '!kotiuta <summa> (min 1000 SPC)'
+            '!kotiuta <summa> (min 1000 SPC)\n\n'
+            f'Spämmi estää laittamasta liikaa slotteja. '
+            f'Pidä vähintään {self.settings["slot_delay"]}s viive.'
         )
 
     def dice_callback(self, update, context):
@@ -379,6 +386,16 @@ class SPCTelegramBot:
 
         logger.info(f'handle_dice: {update}')
         user_id = update.effective_user.id
+
+        now_timestamp = arrow.now().timestamp
+        if self.settings['slot_delay'] > 0:
+            previous_timestamp = self.delays.get(update.effective_user.id, 0)
+            if now_timestamp - previous_timestamp < self.settings['slot_delay']:
+                self.bot.delete_message(update.effective_chat.id,
+                                        update.effective_message.message_id)
+                return
+        self.delays[user_id] = now_timestamp
+
         dice = update.message.dice
         roll = self._get_roll(user_id)
 
