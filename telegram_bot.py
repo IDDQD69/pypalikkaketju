@@ -38,13 +38,14 @@ widthraw_url = os.getenv('spc_widthraw_url', '')
 
 default_settings = {
     'win_basic':  1,
-    'win_777':  10,
+    'win_777':  1,
     'mp_shape': 1,
     'mp_scale': 1,
     'mp_size': 1,
     'max_bet': 1000,
-    'mp_10': 0.1,
-    'mp_100': 0.01,
+    'mp_10': 0.8,
+    'mp_50': 0.5,
+    'mp_100': 0.04,
     'mp_1000': 0.0001
 }
 
@@ -386,15 +387,6 @@ class SPCTelegramBot:
         scale = self.settings['mp_scale']
         size = self.settings['mp_size']
         win_mp = float(np.random.gamma(shape, scale, size))
-
-        random_float = np.random.random()
-        if random_float <= self.settings['mp_1000']:
-            win_mp *= 1000
-        elif random_float <= self.settings['mp_100']:
-            win_mp *= 100
-        elif random_float <= self.settings['mp_10']:
-            win_mp *= 10
-
         return round(win_mp, 1) + 1
 
     def handle_dice(self, update):
@@ -419,7 +411,17 @@ class SPCTelegramBot:
                     win_mp = win_mp * self.settings['win_basic']
                 elif dice.value == 64:
                     win_mp = self.get_win_multiplier()
-                    win_mp = win_mp * self.settings['win_777']
+                    win_mp *= self.settings['win_777']
+
+                    random_float = np.random.random()
+                    if random_float <= self.settings['mp_1000']:
+                        win_mp *= 1000
+                    elif random_float <= self.settings['mp_100']:
+                        win_mp *= 100
+                    elif random_float <= self.settings['mp_50']:
+                        win_mp *= 50
+                    elif random_float <= self.settings['mp_10']:
+                        win_mp *= 10
 
                 if win_mp > 0:
                     win_value = round(roll.bet * win_mp, 0)
