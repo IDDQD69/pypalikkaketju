@@ -409,16 +409,13 @@ class SPCTelegramBot:
                 if dice.value in [43, 22, 1]:
                     win_mp = self.get_win_multiplier()
                     win_mp = win_mp * self.settings['win_basic']
-                elif dice.value == 64:
-                    win_mp = self.get_win_multiplier()
-                    win_mp *= self.settings['win_777']
 
                     random_float = np.random.random()
-                    if random_float <= self.settings['mp_1000']:
+                    if dice.value == 64 and random_float <= self.settings['mp_1000']:
                         win_mp *= 1000
-                    elif random_float <= self.settings['mp_100']:
+                    elif dice.value == 64 and random_float <= self.settings['mp_100']:
                         win_mp *= 100
-                    elif random_float <= self.settings['mp_50']:
+                    elif dice.value == 64 and random_float <= self.settings['mp_50']:
                         win_mp *= 50
                     elif random_float <= self.settings['mp_10']:
                         win_mp *= 10
