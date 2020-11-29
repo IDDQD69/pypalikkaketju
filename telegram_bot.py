@@ -35,10 +35,9 @@ db = SqliteDatabase('database/spc.db')
 
 widthraw_url = os.getenv('spc_widthraw_url', '')
 
-
 default_settings = {
-    'win_basic':  1,
-    'win_777':  1,
+    'win_basic': 1,
+    'win_777': 1,
     'mp_shape': 1,
     'mp_scale': 1,
     'mp_size': 1,
@@ -181,7 +180,6 @@ class SPCTelegramBot:
                     reply_text += f'{setting}: {default_settings[setting]}\n'
                 update.message.reply_text(reply_text)
             if len(arguments) > 3:
-
                 setting = arguments[2]
                 value = int(arguments[3])
                 default_settings[setting] = value
@@ -218,7 +216,7 @@ class SPCTelegramBot:
             return
 
         if len(arguments) == 1:
-            update.message.reply_text('!kotiuta <summa>')
+            update.message.reply_text('!kotiuta <summa> (min 1000 SPC)')
             return
 
         try:
@@ -231,51 +229,36 @@ class SPCTelegramBot:
             w_value = int(arguments[1])
             logger.info(f'cmd_widthraw: w_value {w_value}')
 
-            if roll.balance < w_value:
+            if w_value < 1000 or roll.balance < w_value:
                 update.message.reply_text('Ei katetta.')
                 return
 
-            try:
-
-                pk, spk = crypto_sign_keypair()
-                print('pk 1', pk)
-                print('pk 1', pk.hex())
-                print('pk 1', binascii.unhexlify(pk.hex()))
-
-                signed_data = sign_data(secret_key=self.secret_key, data='data_str')
-                print('signed_data', signed_data.hex())
-                # verified_data = verify_data(signed_data.hex(), self.public_key)
-                verified_data = crypto_sign_open(signed_data, bytes(self.public_key, 'utf-8'))
-                print('verified_data', verified_data)
-            except Exception as e:
-                print('eas', e)
-
-            data_str = sign_data(self.secret_key, {
-                'to_address': address.address,
-                'from_address': self.public_key,
-                'amount': w_value
-            })
+            data_str = sign_data(
+                secret_key=self.secret_key,
+                data={'to_address': address.address,
+                      'from_address': self.public_key,
+                      'amount': w_value})
 
             logger.info(f'cmd_widthraw: data_str {data_str}')
             logger.info(f'cmd_widthraw: widthraw_url {widthraw_url}')
 
-            data = {
-                'public_key': self.public_key,
-                'message': data_str.hex()
-            }
-
             result = requests.post(
                 widthraw_url,
-                json=data,
+                json={'public_key': self.public_key,
+                      'message': data_str},
                 headers={'Content-type': 'application/json'})
 
-            print('res', result)
+            if result.status_code == 200:
+                roll.balance -= w_value
+                roll.save()
+                update.message.reply_text(f'Kotiutus {w_value} SPC onnistui.')
+
         except DoesNotExist:
             update.message.reply_text('Tarkista osoite.')
         except ValueError as e:
             update.message.reply_text('Virheellinen summa.')
         except Exception as e:
-            logger.info(f'cmd_widthraw: error {e}')
+            update.message.reply_text('Virhe.')
 
     def cmd_roll_stats(self, update: Update) -> None:
         win_lose_dict = {}
@@ -359,7 +342,7 @@ class SPCTelegramBot:
             'Sattuma päättää nyt kertoimen.'
             '\n\n'
             'Jos olet köyhä ja haluat rahat takas, niin:\n'
-            '!kotiuta <summa>'
+            '!kotiuta <summa> (min 1000 SPC)'
         )
 
     def dice_callback(self, update, context):
