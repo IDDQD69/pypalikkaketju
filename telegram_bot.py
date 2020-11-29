@@ -43,6 +43,9 @@ default_settings = {
     'mp_scale': 2,
     'mp_size': 1,
     'max_bet': 1000,
+    'mp_10': 0.1,
+    'mp_100': 0.01,
+    'mp_1000': 0.0001
 }
 
 
@@ -238,7 +241,7 @@ class SPCTelegramBot:
                 print('pk 1', pk.hex())
                 print('pk 1', binascii.unhexlify(pk.hex()))
 
-                signed_data = sign_data(secret_key=self.secret_key, data=data_str)
+                signed_data = sign_data(secret_key=self.secret_key, data='data_str')
                 print('signed_data', signed_data.hex())
                 # verified_data = verify_data(signed_data.hex(), self.public_key)
                 verified_data = crypto_sign_open(signed_data, bytes(self.public_key, 'utf-8'))
@@ -383,6 +386,15 @@ class SPCTelegramBot:
         scale = self.settings['mp_scale']
         size = self.settings['mp_size']
         win_mp = float(np.random.gamma(shape, scale, size))
+
+        random_float = np.random.random()
+        if random_float <= self.settings['mp_1000']:
+            win_mp *= 1000
+        elif random_float <= self.settings['mp_100']:
+            win_mp *= 100
+        elif random_float <= self.settings['mp_10']:
+            win_mp *= 10
+
         return round(win_mp, 1) + 1
 
     def handle_dice(self, update):
