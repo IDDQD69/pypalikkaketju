@@ -323,7 +323,7 @@ class SPCTelegramBot:
                 roll.save()
             return_message = (
                 '-- Tilisi tiedot -- \n'
-                f'Pelitili: {roll.balance} SPC\n'
+                f'Pelitili: {roll.balance:,} SPC\n'
                 f'Panos: {roll.bet}\n'
             )
             update.message.reply_text(return_message)
