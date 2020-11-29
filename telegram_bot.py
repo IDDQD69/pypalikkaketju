@@ -387,7 +387,7 @@ class SPCTelegramBot:
         scale = self.settings['mp_scale']
         size = self.settings['mp_size']
         win_mp = float(np.random.gamma(shape, scale, size))
-        return round(win_mp, 1) + 1
+        return int(win_mp) + 1
 
     def handle_dice(self, update):
 
@@ -500,7 +500,7 @@ class SPCTelegramBot:
 
             update = msg['update']
             if msg['win_value'] > 0:
-                message_string = f'-- VOITTO {msg["win_value"]} SPC --\n' \
+                message_string = f'-- VOITTO {msg["win_value"]:,} SPC --\n' \
                                  f'kerroin: {msg["win_mp"]}'
                 update.message.reply_text(message_string)
         self.roll_messages = new_messages
