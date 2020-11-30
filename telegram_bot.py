@@ -290,12 +290,6 @@ class SPCTelegramBot:
 
             counter = counter + 1
 
-        for v, c in counts.items():
-            print('c', v, c, c / counter)
-
-        print('counter', counter)
-        print('counts', counts)
-
     def cmd_roll(self, update: Update) -> None:
         arguments = update.message.text.split(' ')
         user_id = update.effective_user.id
