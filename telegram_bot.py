@@ -23,7 +23,6 @@ from peewee import DateTimeField
 from peewee import IntegerField
 
 from signing.sign import sign_data
-from signing.verify import verify_data
 
 from nacl.bindings.crypto_sign import crypto_sign_ed25519_sk_to_pk, crypto_sign_open, crypto_sign_keypair
 
@@ -40,7 +39,7 @@ default_settings = {
     'win_basic': 1,
     'win_777': 1,
     'mp_shape': 1,
-    'mp_scale': 1,
+    'mp_scale': 2,
     'mp_size': 1,
     'max_bet': 1000,
     'mp_10': 0.8,
@@ -265,6 +264,24 @@ class SPCTelegramBot:
         except Exception as e:
             update.message.reply_text('Virhe.')
 
+    def _get_stats_dict(self, win_lose_dict):
+        result_dict = {}
+
+        for k, v in win_lose_dict.items():
+            try:
+                a = Address.get(Address.user_id == k)
+                username = a.username
+                result_dict[username] = {
+                    'rolls': v['rolls'],
+                    'wins': v['wins'],
+                    'bets': v['bets'],
+                    'avgWin': v['wins'] / v['rolls'],
+                }
+            except:
+                pass
+
+        return result_dict
+
     def cmd_roll_stats(self, update: Update) -> None:
         win_lose_dict = {}
 
@@ -281,14 +298,24 @@ class SPCTelegramBot:
             user_dict = win_lose_dict.get(d.user_id, {})
 
             win_lose_dict[d.user_id] = {
+                'rolls': user_dict.get('rolls', 0) + 1,
                 'wins': user_dict.get('wins', 0) + d.win,
                 'bets': user_dict.get('bets', 0) + d.bet
             }
 
             if d.value in [1, 22, 43, 64]:
                 counts[d.value] = counts.get(d.value, 0) + 1
-
             counter = counter + 1
+
+        stats_dict = self._get_stats_dict(win_lose_dict)
+
+        text_str = 'Stats:\n'
+        for k, v in stats_dict.items():
+            text_str += f'{k} - ' \
+                        f'{v["rolls"]} rolls - ' \
+                        f'avgWin {v["avgWin"]:.2f}\n'
+
+        update.message.reply_text(text_str)
 
     def cmd_roll(self, update: Update) -> None:
         arguments = update.message.text.split(' ')
