@@ -46,7 +46,7 @@ default_settings = {
     'mp_50': 0.5,
     'mp_100': 0.04,
     'mp_1000': 0.0001,
-    'slot_delay': 0
+    'slot_delay': 5
 }
 
 
@@ -117,7 +117,7 @@ class SPCTelegramBot:
         self._create_tables()
 
         self.delays = {}
-        self.roll_doubling = {}
+        self.latest_dices = {}
         self.roll_messages = []
         self.secret_key, self.public_key = self._get_keys(self.spc_wallet)
         self.bot = Bot(self.token)
@@ -342,9 +342,9 @@ class SPCTelegramBot:
             update.message.reply_text('Osoitetta ei lisätty.')
 
     @staticmethod
-    def get_roll_message(update, new_balance, win_value, win_mp):
+    def get_roll_message(update, new_balance, win_value, win_mp=0, delay=2):
         return {
-            'timestamp': arrow.get().shift(seconds=2).datetime,
+            'timestamp': arrow.get().shift(seconds=delay).datetime,
             'update': update,
             'win_value': win_value,
             'win_mp': win_mp,
@@ -425,7 +425,6 @@ class SPCTelegramBot:
         win_value = 0
 
         if '🎰' == dice.emoji and roll.bet > 0:
-            self.roll_doubling[user_id] = False
             if roll.balance >= roll.bet:
                 win_value = 0
                 win_mp = 0
@@ -444,39 +443,56 @@ class SPCTelegramBot:
                         win_mp *= 10
 
                 if win_mp > 0:
-                    self.roll_doubling[user_id] = True
                     win_value = round(roll.bet * win_mp, 0)
 
-                new_balance = roll.balance - roll.bet + win_value
+                new_balance = roll.balance + win_value
                 roll.balance = new_balance
                 roll.save()
 
-                message = self.get_roll_message(update,
-                                                new_balance,
-                                                win_value,
-                                                win_mp)
-                self.roll_messages.append(message)
+                if win_value > 0:
+                    message = self.get_roll_message(update,
+                                                    new_balance,
+                                                    win_value,
+                                                    win_mp=win_mp)
+                    self.roll_messages.append(message)
 
                 if new_balance - roll.bet <= 0:
                     update.message.reply_text('Ei enää pelimerkkejä.')
+            if win_mp > 0:
+                self.latest_dices[user_id] = Dice.create(
+                    user_id=user_id,
+                    emoji=dice.emoji,
+                    value=dice.value,
+                    bet=dice_bet,
+                    win=win_value)
 
-        elif dice.emoji == '🏀':#  and self.roll_doubling.get(user_id, False):
-            print('dice.value', dice.value)
-            try:
-                dt = arrow.now().shift(minutes=-5).datetime
-                d = Dice.select()\
-                    .where(Dice.emoji == "🎰",
-                           Dice.user_id == user_id,
-                           Dice.datetime >= dt)\
-                    .order_by(Dice.datetime)\
-                    .limit(1)
-                print('d', d)
-            except DoesNotExist:
-                return
-            pass
+        elif '🏀' == dice.emoji and user_id in self.latest_dices:
+            last_dice: Dice = self.latest_dices.get(user_id)
+            if last_dice.win > 0:
+                roll: Roll = self._get_roll(user_id)
+                last_win = last_dice.win
+                if dice.value > 3:
+                    new_win = last_dice.win * 2
+                else:
+                    new_win = 0
 
-        Dice.create(user_id=user_id, emoji=dice.emoji, value=dice.value,
-                    bet=dice_bet, win=win_value)
+                roll.balance -= last_win
+                if new_win > 0:
+                    roll.balance += new_win
+
+                roll.save()
+
+                message = self.get_roll_message(update,
+                                                roll.balance,
+                                                new_win,
+                                                delay=4)
+                self.roll_messages.append(message)
+
+                last_dice.win = new_win
+                last_dice.save()
+                self.latest_dices[user_id] = last_dice
+            else:
+                update.message.reply_text('Ei tuplattavaa.')
 
     def _get_transactions(self):
         get_chain_address = f"{self.spc_url}/transactions/{self.public_key}"
@@ -535,10 +551,10 @@ class SPCTelegramBot:
                 continue
 
             update = msg['update']
-            if msg['win_value'] > 0:
-                message_string = f'-- VOITTO {msg["win_value"]:,} SPC --\n' \
-                                 f'kerroin: {msg["win_mp"]}'
-                update.message.reply_text(message_string)
+            message_string = f'-- VOITTO {msg["win_value"]:,} SPC --'
+            if msg['win_mp'] > 0:
+                message_string += f'\nkerroin: {msg["win_mp"]}'
+            update.message.reply_text(message_string)
         self.roll_messages = new_messages
 
 
