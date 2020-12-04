@@ -445,7 +445,7 @@ class SPCTelegramBot:
                 if win_mp > 0:
                     win_value = round(roll.bet * win_mp, 0)
 
-                new_balance = roll.balance + win_value
+                new_balance = roll.balance - roll.bet + win_value
                 roll.balance = new_balance
                 roll.save()
 
