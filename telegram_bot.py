@@ -458,7 +458,7 @@ class SPCTelegramBot:
 
                 if new_balance - roll.bet <= 0:
                     update.message.reply_text('Ei enää pelimerkkejä.')
-            if win_mp > 0:
+
                 self.latest_dices[user_id] = Dice.create(
                     user_id=user_id,
                     emoji=dice.emoji,
