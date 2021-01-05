@@ -37,7 +37,7 @@ widthraw_url = os.getenv('spc_widthraw_url', '')
 
 default_settings = {
     'win_basic': 1,
-    'win_777': 1,
+    'win_777': 10,
     'mp_shape': 1,
     'mp_scale': 2,
     'mp_size': 1,
@@ -45,7 +45,8 @@ default_settings = {
     'mp_10': 0.8,
     'mp_50': 0.5,
     'mp_100': 0.04,
-    'mp_1000': 0.0001,
+    'mp_1000': 0.001,
+    'mp_2000': 0.0001,
     'slot_delay': 5
 }
 
@@ -433,13 +434,15 @@ class SPCTelegramBot:
                     win_mp = win_mp * self.settings['win_basic']
 
                     random_float = np.random.random()
-                    if dice.value == 64 and random_float <= self.settings['mp_1000']:
+                    if dice.value == 64 and random_float <= self.settings['mp_2000']:
+                        win_mp *= 2000
+                    elif dice.value == 64 and random_float <= self.settings['mp_1000']:
                         win_mp *= 1000
                     elif dice.value == 64 and random_float <= self.settings['mp_100']:
                         win_mp *= 100
                     elif dice.value == 64 and random_float <= self.settings['mp_50']:
                         win_mp *= 50
-                    elif random_float <= self.settings['mp_10']:
+                    elif dice.value == 64 or random_float <= self.settings['mp_10']:
                         win_mp *= 10
 
                 if win_mp > 0:
