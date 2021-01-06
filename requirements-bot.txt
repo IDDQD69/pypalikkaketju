@@ -1,6 +1,5 @@
 requests~=2.22
 python-telegram-bot==13.0
-peewee==3.14.0
 arrow~=0.17.0
 pynacl~=1.4.0
 numpy~=1.19.4

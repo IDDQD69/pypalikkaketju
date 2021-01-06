@@ -4,3 +4,4 @@ pynacl~=1.4.0
 robohash~=1.1
 pagan~=0.4.3
 arrow~=0.17.0
+peewee==3.14.0
