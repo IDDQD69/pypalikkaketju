@@ -5,10 +5,5 @@ data: dict
 
 
 def get_settings():
-    global data
-
-    if not data:
-        with open('data.yaml') as f:
-            data = yaml.load(f, Loader=yaml.FullLoader)
-
-    return data
+    with open('hero_roll/data.yaml') as f:
+        return yaml.load(f, Loader=yaml.FullLoader)
