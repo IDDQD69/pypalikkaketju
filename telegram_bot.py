@@ -15,6 +15,9 @@ from telegram.ext import MessageHandler
 from telegram.ext import Filters
 from telegram.ext import JobQueue
 
+from hero_roll.roll import handle_hero_roll
+from hero_roll import models
+
 from peewee import SqliteDatabase
 from peewee import DoesNotExist
 from peewee import Model
@@ -25,6 +28,8 @@ from peewee import IntegerField
 from signing.sign import sign_data
 
 from nacl.bindings.crypto_sign import crypto_sign_ed25519_sk_to_pk, crypto_sign_open, crypto_sign_keypair
+
+from telegram import constants
 
 db = SqliteDatabase('database/spc.db')
 
@@ -117,6 +122,11 @@ class SPCTelegramBot:
 
         self._create_tables()
 
+        try:
+            models.create_tables()
+        except Exception as e:
+            print('hero create tables', e)
+
         self.delays = {}
         self.latest_dices = {}
         self.roll_messages = []
@@ -131,7 +141,7 @@ class SPCTelegramBot:
         dice_filter = Filters.dice \
                       & (~Filters.forwarded) \
                       & (~Filters.update.edited_message) \
-                      & Filters.group
+                      & Filters.chat_type.group
 
         msg_handler = MessageHandler(filters=msg_filter,
                                      callback=self.message_callback)
@@ -424,8 +434,7 @@ class SPCTelegramBot:
 
         dice_bet = roll.bet
         win_value = 0
-
-        if '🎰' == dice.emoji and roll.bet > 0:
+        if constants.DICE_SLOT_MACHINE == dice.emoji and roll.bet > 0:
             if roll.balance >= roll.bet:
                 win_value = 0
                 win_mp = 0
@@ -459,6 +468,11 @@ class SPCTelegramBot:
                                                     win_mp=win_mp)
                     self.roll_messages.append(message)
 
+                try:
+                    handle_hero_roll(update, win_value)
+                except Exception as e:
+                    print('e', e)
+
                 if new_balance - roll.bet <= 0:
                     update.message.reply_text('Ei enää pelimerkkejä.')
 
@@ -469,7 +483,7 @@ class SPCTelegramBot:
                     bet=dice_bet,
                     win=win_value)
 
-        elif '🏀' == dice.emoji and user_id in self.latest_dices:
+        elif constants.DICE_BASKETBALL == dice.emoji and user_id in self.latest_dices:
             last_dice: Dice = self.latest_dices.get(user_id)
             if last_dice.win > 0:
                 roll: Roll = self._get_roll(user_id)

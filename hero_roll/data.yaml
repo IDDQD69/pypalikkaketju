@@ -1,10 +1,13 @@
 ---
 
 settings:
-  roll_xp: 10
+  roll_xp: 5
   roll_xp_win: 50
   drop_rate: 0.01
-  drop_rate_win: 0.05
+  drop_rate_win: 0.1
+
+  base_xp: 100
+  xp_level_multiplier: 10
 
 equipment:
   types:

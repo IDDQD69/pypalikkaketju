@@ -2,7 +2,7 @@ from peewee import SqliteDatabase, IntegerField, \
     CharField, DateTimeField, Model, ForeignKeyField
 import datetime
 
-db = SqliteDatabase('../database/spc.db')
+db = SqliteDatabase('database/hero.db')
 
 
 class Hero(Model):
@@ -36,3 +36,9 @@ class EquipmentEffect(Model):
 
     class Meta:
         database = db
+
+
+def create_tables():
+    db.create_tables([Hero,
+                      HeroEquipment,
+                      EquipmentEffect])
