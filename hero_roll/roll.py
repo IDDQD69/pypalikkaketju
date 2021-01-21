@@ -8,6 +8,8 @@ from . import get_settings
 
 
 def _get_roll_xp(settings: dict, win_value: int) -> int:
+    # TODO: xp + win_value / 100?
+    # possible to get multiple levels at once
     return settings['settings']['roll_xp_win']\
         if win_value > 0 \
            else settings['settings']['roll_xp']
