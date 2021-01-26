@@ -475,6 +475,7 @@ class SPCTelegramBot:
                     self.roll_messages.append(message)
 
                 try:
+                    logger.info(f'handling hero roll start')
                     handle_hero_roll(update, win_value)
                     logger.info(f'handle hero roll done')
                 except Exception as e:
