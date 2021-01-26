@@ -476,6 +476,7 @@ class SPCTelegramBot:
 
                 try:
                     handle_hero_roll(update, win_value)
+                    logger.info(f'handle hero roll done')
                 except Exception as e:
                     logger.info(f'handle hero roll error: {e}')
 
