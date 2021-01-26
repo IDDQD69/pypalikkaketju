@@ -7,7 +7,7 @@ settings:
   drop_rate_win: 0.1
 
   base_xp: 100
-  next_xp: 150
+  next_xp: 200
 
 equipment:
   types:

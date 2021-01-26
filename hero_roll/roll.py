@@ -51,3 +51,14 @@ def handle_hero_roll(update: Update, win_value: int):
     hero.save()
     xp_req = _get_hero_xp_requirement(hero, settings)
     print('xp re', xp_req, hero.xp, hero.level)
+
+
+def get_hero_info(update: Update):
+    settings = get_settings()
+    user: User = update.effective_user
+    hero: Hero = _get_hero(user.id)
+    return {
+        'hero_level': hero.level,
+        'hero_xp': hero.xp,
+        'hero_req_xp': _get_hero_xp_requirement(hero, settings)
+    }

@@ -15,7 +15,7 @@ from telegram.ext import MessageHandler
 from telegram.ext import Filters
 from telegram.ext import JobQueue
 
-from hero_roll.roll import handle_hero_roll
+from hero_roll.roll import handle_hero_roll, get_hero_info
 from hero_roll import models
 
 from peewee import SqliteDatabase
@@ -347,6 +347,12 @@ class SPCTelegramBot:
                 f'Pelitili: {roll.balance:,} SPC\n'
                 f'Panos: {roll.bet}\n'
             )
+            try:
+                hero_dict = get_hero_info(update)
+                return_message += f'Hero lvl {str(hero_dict["hero_level"])}\n'
+                return_message += f'hero xp {str(hero_dict["hero_xp"])} / {str(hero_dict["hero_req_xp"])}\n'
+            except Exception as e:
+                print('e', e)
             update.message.reply_text(return_message)
         except Exception as e:
             print(e)
