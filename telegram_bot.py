@@ -477,7 +477,7 @@ class SPCTelegramBot:
                 try:
                     handle_hero_roll(update, win_value)
                 except Exception as e:
-                    print('e', e)
+                    logger.info(f'handle hero roll error: {e}')
 
                 if new_balance - roll.bet <= 0:
                     update.message.reply_text('Ei enää pelimerkkejä.')
