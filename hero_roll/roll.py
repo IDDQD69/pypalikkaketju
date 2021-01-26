@@ -14,9 +14,11 @@ def _get_roll_xp(settings: dict, win_value: int) -> int:
         if win_value > 0 \
            else settings['settings']['roll_xp']
 
+
 def _get_hero_xp_requirement(hero: Hero, settings: dict) -> int:
     return settings['settings']['base_xp']\
         + (hero.level * settings['settings']['next_xp'])
+
 
 def _get_hero(user_id) -> Hero:
     try:
