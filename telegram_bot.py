@@ -140,8 +140,7 @@ class SPCTelegramBot:
 
         dice_filter = Filters.dice \
                       & (~Filters.forwarded) \
-                      & (~Filters.update.edited_message) \
-                      & Filters.chat_type.group
+                      & (~Filters.update.edited_message)
 
         msg_handler = MessageHandler(filters=msg_filter,
                                      callback=self.message_callback)
@@ -439,7 +438,7 @@ class SPCTelegramBot:
         roll = self._get_roll(user_id)
 
         dice_bet = roll.bet
-        win_value = 0
+
         if constants.DICE_SLOT_MACHINE == dice.emoji and roll.bet > 0:
             if roll.balance >= roll.bet:
                 win_value = 0
