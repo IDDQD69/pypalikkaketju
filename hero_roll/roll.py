@@ -6,7 +6,7 @@ from .models import Hero
 
 
 def _get_roll_xp(win_value: int) -> int:
-    return win_value * 0.01 if win_value > 0 else 5
+    return win_value * 0.1 + 10 if win_value > 0 else 0
 
 
 def _get_xp_requirement(level: int) -> int:
@@ -30,13 +30,15 @@ def _get_new_level(current_level, new_xp):
         else _get_new_level(current_level + 1, new_xp)
 
 
-def handle_hero_roll(update: Update, win_value: int):
+def handle_hero_roll(update: Update, win_value: int) -> bool:
     user: User = update.effective_user
     hero: Hero = _get_hero(user.id)
 
+    old_level = hero.level
     hero.xp = hero.xp + _get_roll_xp(win_value)
     hero.level = _get_new_level(hero.level, hero.xp)
     hero.save()
+    return old_level < hero.level
 
 
 def get_hero_info(update: Update):

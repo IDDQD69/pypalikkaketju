@@ -52,7 +52,7 @@ default_settings = {
     'mp_100': 0.04,
     'mp_1000': 0.001,
     'mp_2000': 0.0001,
-    'slot_delay': 5
+    'slot_delay': 0
 }
 
 
@@ -358,13 +358,15 @@ class SPCTelegramBot:
             update.message.reply_text('Osoitetta ei lisätty.')
 
     @staticmethod
-    def get_roll_message(update, new_balance, win_value, win_mp=0, delay=2):
+    def get_roll_message(update, new_balance, win_value,
+                         win_mp=0, delay=2, hero_leveled=False):
         return {
             'timestamp': arrow.get().shift(seconds=delay).datetime,
             'update': update,
             'win_value': win_value,
             'win_mp': win_mp,
-            'new_balance': new_balance
+            'new_balance': new_balance,
+            'hero_leveled': hero_leveled
         }
 
     def get_help_text(self):
@@ -439,6 +441,8 @@ class SPCTelegramBot:
 
         dice_bet = roll.bet
 
+        hero_leveled = False
+
         if constants.DICE_SLOT_MACHINE == dice.emoji and roll.bet > 0:
             if roll.balance >= roll.bet:
                 win_value = 0
@@ -466,19 +470,18 @@ class SPCTelegramBot:
                 roll.balance = new_balance
                 roll.save()
 
+                try:
+                    hero_leveled = handle_hero_roll(update, win_value)
+                except Exception as e:
+                    logger.error(e)
+
                 if win_value > 0:
                     message = self.get_roll_message(update,
                                                     new_balance,
                                                     win_value,
-                                                    win_mp=win_mp)
+                                                    win_mp=win_mp,
+                                                    hero_leveled=hero_leveled)
                     self.roll_messages.append(message)
-
-                try:
-                    logger.info(f'handling hero roll start')
-                    handle_hero_roll(update, win_value)
-                    logger.info(f'handle hero roll done')
-                except Exception as e:
-                    logger.info(f'handle hero roll error: {e}')
 
                 if new_balance - roll.bet <= 0:
                     update.message.reply_text('Ei enää pelimerkkejä.')
@@ -578,6 +581,8 @@ class SPCTelegramBot:
             message_string = f'-- VOITTO {msg["win_value"]:,} SPC --'
             if msg['win_mp'] > 0:
                 message_string += f'\nkerroin: {msg["win_mp"]}'
+            if msg['hero_leveled']:
+                message_string += f'\n\n📣 new level 📣'
             update.message.reply_text(message_string)
         self.roll_messages = new_messages
 
