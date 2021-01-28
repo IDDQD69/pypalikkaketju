@@ -9,8 +9,8 @@ def _get_roll_xp(win_value: int) -> int:
     return win_value * 0.01 if win_value > 0 else 5
 
 
-def _get_hero_xp_requirement(hero: Hero) -> int:
-    return 100 + (hero.level * 200)
+def _get_xp_requirement(level: int) -> int:
+    return 100 + ((level * 200) * level)
 
 
 def _get_hero(user_id) -> Hero:
@@ -24,15 +24,10 @@ def _get_hero(user_id) -> Hero:
             xp=0)
 
 
-def _handle_hero_level(hero):
-    fail_counter = 0
-    xp_req = _get_hero_xp_requirement(hero)
-    while hero.xp >= xp_req:
-        hero.level = hero.level + 1
-        xp_req = _get_hero_xp_requirement(hero)
-        fail_counter = fail_counter + 1
-        if fail_counter < 300:
-            break
+def _get_new_level(current_level, new_xp):
+    return current_level \
+        if _get_xp_requirement(current_level) > new_xp \
+        else _get_new_level(current_level + 1, new_xp)
 
 
 def handle_hero_roll(update: Update, win_value: int):
@@ -40,8 +35,7 @@ def handle_hero_roll(update: Update, win_value: int):
     hero: Hero = _get_hero(user.id)
 
     hero.xp = hero.xp + _get_roll_xp(win_value)
-
-    _handle_hero_level(hero)
+    hero.level = _get_new_level(hero.level, hero.xp)
     hero.save()
 
 
@@ -51,5 +45,5 @@ def get_hero_info(update: Update):
     return {
         'hero_level': hero.level,
         'hero_xp': hero.xp,
-        'hero_req_xp': _get_hero_xp_requirement(hero)
+        'hero_req_xp': _get_xp_requirement(hero.level)
     }
